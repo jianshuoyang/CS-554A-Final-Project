@@ -1,8 +1,8 @@
 const mongoClient = require('mongodb').MongoClient;
 const settings = {
   mongoConfig:{
-    serverUrl:'mongodb://localhost:27017/',
-    database:'Web Killer Final Project'
+    serverUrl: 'mongodb://localhost:27017/',
+    database: 'Web_Killer_Final_Project'
   }
 };
 const mongoConfig = settings.mongoConfig;
