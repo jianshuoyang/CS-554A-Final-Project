@@ -97,7 +97,7 @@ async function deleteUser(id) {
   }
 }
 
-// removeSongFromUser('5fc10647acf24ea76d053710', '5fc29f035493b4db924908ef');
+// addSongToUser('5fc10647acf24ea76d053710', '5fc2a1e28178a4dc6b454038');
 async function addSongToUser(id, songId) {
   if (!id || typeof id !== 'string') throw 'invalid id';
   if (!songId || typeof songId !== 'string') throw 'invalid song id';
