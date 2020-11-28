@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
+const songs = mongoCollections.songs;
 const {ObjectId} = require('mongodb');
+const songsUtil = require('./songs');
 
 function check(obj) {
   let flag = true;
@@ -93,4 +95,50 @@ async function deleteUser(id) {
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete user with id of ${id}`;
   }
+}
+
+// removeSongFromUser('5fc10647acf24ea76d053710', '5fc29f035493b4db924908ef');
+async function addSongToUser(id, songId) {
+  if (!id || typeof id !== 'string') throw 'invalid id';
+  if (!songId || typeof songId !== 'string') throw 'invalid song id';
+
+  const objId = ObjectId.createFromHexString(id);
+  const songObj = await songsUtil.getSongById(songId);
+  let res = {
+    id: songObj._id,
+    name: songObj.name,
+    singerName: songObj.singerName,
+    albumName: songObj.albumName,
+    comments: songObj.comments
+  }
+
+  const userCollection = await users();
+  await userCollection.updateOne({_id: objId}, {$addToSet: {likedSongs: res}});
+}
+
+async function removeSongFromUser(id, songId) {
+  if (!id || typeof id !== 'string') throw 'invalid id';
+  if (!songId || typeof songId !== 'string') throw 'invalid song id';
+
+  const objId = ObjectId.createFromHexString(id);
+  const objId2 = ObjectId.createFromHexString(songId);
+  const userCollections = await users();
+  const updateInfo = await userCollections.updateOne({_id: objId}, {$pull: {likedSongs: {id: objId2}}});
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'delete song from user failed';
+
+  const songCollections = await songs();
+  const deleteInfo = await songCollections.removeOne({_id: objId2});
+  if (deleteInfo.deletedCount === 0) {
+    throw `Could not delete the comment with id of ${objId2}`;
+  }
+}
+
+module.exports = {
+  addUser,
+  getUserById,
+  getUsers,
+  updateUserDelta,
+  deleteUser,
+  addSongToUser,
+  removeSongFromUser
 }
