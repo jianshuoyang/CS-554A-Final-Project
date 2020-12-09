@@ -35,11 +35,12 @@ function check(obj) {
 }
 
 // addUser('jianshuo', 'yang', 'male', '123@qq.com');
-async function addUser(firstName, lastName, gender, email) {
+async function addUser(firstName, lastName, gender, email, password) {
   if (!firstName || typeof firstName !== 'string') throw `invalid first name`;
   if (!lastName || typeof lastName !== 'string') throw `invalid last name`;
   if (!gender || typeof gender !== 'string') throw `invalid gender input`;
   if (!email || typeof email !== 'string') throw `invalid email input`;
+  if (!password || typeof password !== 'string') throw `invalid password input`;
 
   const userCollection = await users();
   let newUser = {
@@ -47,6 +48,7 @@ async function addUser(firstName, lastName, gender, email) {
     lastName: lastName,
     gender: gender,
     email: email,
+    password: password,
     likedSongs: []
   }
 
