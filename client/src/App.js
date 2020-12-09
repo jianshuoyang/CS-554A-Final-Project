@@ -1,13 +1,10 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import test from "./components/test";
+import React, {useState, useEffect} from "react";import './App.css';
 
 function App() {
 
   return (
       <div>
-        <test/>
+
       </div>
   );
 }
