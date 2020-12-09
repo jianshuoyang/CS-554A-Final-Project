@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import user from '../../data/users';
 import "./Register.css";
 
 
 function RegistrationForm(props) {
+    const [submitStatus, setSubmitStatus] = useState(false); 
     const [state , setState] = useState({
         firstname: "",
         lastname:"",
@@ -11,6 +12,21 @@ function RegistrationForm(props) {
         email : "",
         password : ""
     })
+
+    useEffect(() => {
+        console.log('on load useeffect');
+        
+		async function fetchData() {
+			try {
+                if (submitStatus) {
+                    await user.addUser(state.firstname, state.lastname, state.gender, state.email); 
+                }
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		fetchData();
+	}, [submitStatus]);
 
     console.log("firstname: " + state.firstname);
     
@@ -27,7 +43,7 @@ function RegistrationForm(props) {
         e.preventDefault();
         try {
             if(state.password === state.confirmPassword) {
-                user.addUser(state.firstname, state.lastname, state.gender, state.email, state.password); 
+                setSubmitStatus(true); 
             } else {
                 props.showError('Passwords do not match');
             }
