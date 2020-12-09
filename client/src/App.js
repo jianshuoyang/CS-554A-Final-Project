@@ -11,12 +11,12 @@ import Register from './components/Register/Register'
 
 function App() {
 
-  // if (window.location.href.includes("access_token")) {
-  //   return (
-  //     <UserProfile />
+  if (window.location.href.includes("access_token")) {
+    return (
+      <UserProfile />
         
-  //   );
-  // }
+    );
+  }
 
   return (
       <Router>
