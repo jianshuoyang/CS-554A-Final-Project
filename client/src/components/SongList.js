@@ -3,7 +3,9 @@ import {  withRouter } from 'react-router-dom';
 import Song from './Song';
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core';
-import Information from './Infotmation'
+import Information from './Infotmation';
+import { useSelector, useDispatch } from 'react-redux';
+import playAction from '../actions/playAction'
 const useStyles = makeStyles({
 	card: {
 		maxWidth: 250,
@@ -13,7 +15,10 @@ const useStyles = makeStyles({
 		borderRadius: 5,
 		border: '1px solid #1e8678',
 		boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
-	},
+    },
+    play_control_header:{
+        width:'200px',
+    },
 	titleHead: {
 		borderBottom: '1px solid #1e8678',
 		fontWeight: 'bold'
@@ -77,13 +82,13 @@ const useStyles = makeStyles({
         top: '10px'
     },
     song_length_header: {
-        width: '60px'
+        width: '100px'
     },
     song_added:{
         width: '150px'
     },
     song_added_header: {
-        width: '150px'
+        width: '200px'
     },
     song_header_container: {
         display: 'flex',
@@ -117,6 +122,7 @@ const useStyles = makeStyles({
 });
 const SongList = (props)=>{
     const classes = useStyles();
+    const dispatch =  useDispatch();
     const [ page, setPage ] = useState(1);
     const [ song, setSong ] = useState(undefined);
     const [isLast, setLast] = useState(false);
@@ -159,6 +165,7 @@ const SongList = (props)=>{
                     request.get(options, function(error, response, body) {
                     if(error){
                         setError(true);
+                        setLoading(false);
                     }else{
                         if(type === 'playlists'){
                             //console.log(body)
@@ -174,6 +181,7 @@ const SongList = (props)=>{
                             // console.log(body);
                             setTotal(Math.ceil(body.total / 10));
                             setSong(body.items);
+                            dispatch(playAction.updateSongList(body.items));
 
                         }
                         setLoading(false);
@@ -235,16 +243,16 @@ const SongList = (props)=>{
     const buildList = (song, index)=>{
         console.log(index);
         return (
-            <Song song={song} key={song.id?song.id:song.track.id}></Song>
+            <Song song={song} key={song.id?song.id:song.track.id} index={index}></Song>
         )
     }
     let related_album = [];
-    let card = song && song.map((song) => {
+    let card = song && song.map((song, index) => {
 
         if(song.track){
             related_album.push(song.track.album.images[1]);
         }
-        return buildList(song);
+        return buildList(song, index);
     });
 
     if(loading){
@@ -267,6 +275,9 @@ const SongList = (props)=>{
                 <Information artists={artists} date={date} name={name} image={image}  id='' popularity=''  follower={follow} description={description} owner={owner} related_album={related_album}></Information>
             </div>
             <div className={classes.song_header_container}>
+            <div className={classes.play_control_header}>
+
+            </div>
             <div className={classes.song_title_header}>
                 <p>Title</p>
             </div>

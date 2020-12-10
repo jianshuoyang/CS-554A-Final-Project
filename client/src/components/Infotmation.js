@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '30px',
   },
   details: {
+    marginTop:'20px',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -23,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     padding:0
   },
   cover: {
+    margin:'20px',
     width: 400,
+
   },
   name: {
     textAlign: 'left',
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
-  details: {
+  detail: {
     display: 'flex',
     flexDirection: 'column',
   },
@@ -73,7 +76,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Information(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const {name, image, genre,id,popularity,follower,description, owner, related_album, date, artists} = props;
   const [related, setRelated] = useState(undefined);
 

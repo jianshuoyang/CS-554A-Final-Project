@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, withRouter } from 'react-router-dom';
 import LibraryAddOutlined from '@material-ui/icons/LibraryAddOutlined';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import moment from "moment";
 import { makeStyles } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import playAction from '../actions/playAction'
 
 const useStyles = makeStyles({
 	song_li: {
@@ -41,19 +45,22 @@ const useStyles = makeStyles({
         width: '200px'
     },
     song_length:{
-        width: '60px',
+        width: '100px',
     },
     song_icon:{
-        width: '60px',
-        textAlign:'center',
+        width: '100px',
+        textAlign:'left',
         position: 'relative',
-        top: '10px'
+        top: '10px',
+        '&:hover':{
+            color: '#0fff00',
+        }
     },
     song_length_header: {
-        width: '60px'
+        width: '100px'
     },
     song_added:{
-        width: '150px'
+        width: '200px'
     },
     song_added_header: {
         width: '150px'
@@ -63,6 +70,16 @@ const useStyles = makeStyles({
         borderBottom: '1px solid #666',
         paddingBottom: '6px',
         marginTop: '20px'
+    },
+    play_control:{
+        width:'100px',
+        textAlign:'center',
+        position: 'relative',
+        top: '10px',
+        '&:hover':{
+            color: '#0fff00',
+        }
+
     },
     link: {
         textDecoration: 'none',
@@ -78,14 +95,62 @@ const useStyles = makeStyles({
 });
 const Song = (props)=>{
     const classes = useStyles();
-    const {song}=props;
+    const [ play, setPlay] = useState(false);
+    const [ pause, setPause] = useState(true);
+    const allState = useSelector((state) => state);
+    const songsPlay = allState.songsPlay;
+    const songR = allState.songsPlay.song;
+    const dispatch = useDispatch();
+    const {song, index}=props;
     function timeFormat(time){
         const min = Math.floor(time/60000);
         const sec = ((time % 60000) / 1000).toFixed(0);
         return min+":"+(sec < 10 ? "0" : "")+sec;
     }
+
+    // if(songsPlay.globalPlay&&song.track.id===songR.track.id){
+    //     setPlay(true);
+    // }else{
+    //     setPlay(false);
+    // }
+    useEffect(()=>{
+        if(songsPlay.globalPlay&&song.track.id===songR.track.id){
+            setPlay(true);
+        }else{
+            setPlay(false);
+        }
+    },[songR,songsPlay.globalPlay])
+
+
+
+    const handleChange=(song)=>{
+        if(play){
+            dispatch(playAction.pauseSong());
+            setPause(true);
+            setPlay(false);
+            //pauseSong();
+
+        }else{
+            console.log(song);
+            dispatch(playAction.playSong(song,index));
+            setPause(false);
+            setPlay(true);
+            //audioControl(song);
+        }
+    }
     return (
         <li className={classes.song_li} >
+            <div  className={classes.play_control} onClick={()=>handleChange(song, index)}>
+                {play&&songsPlay.globalPlay&&song.track.id===songR.track.id?<PauseCircleOutlineIcon></PauseCircleOutlineIcon>
+                :
+                <PlayCircleOutlineIcon  ></PlayCircleOutlineIcon>
+                }
+            </div>
+            <div className={classes.song_icon}>
+                <i>
+                <LibraryAddOutlined></LibraryAddOutlined>
+                </i>
+            </div>
             <div className={classes.song_title}>
                 <p>{song.track? song.track.name : song.name}</p>
             </div>
@@ -112,11 +177,7 @@ const Song = (props)=>{
             <div className={classes.song_length}>
                 <p>{song.track?timeFormat(song.track.duration_ms):timeFormat(song.duration_ms)}</p>
             </div>
-            <div className={classes.song_icon}>
-                <i>
-                <LibraryAddOutlined></LibraryAddOutlined>
-                </i>
-            </div>
+
         </li>
     )
 }
