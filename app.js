@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoutes = require("./routes/users");
 const songRoutes = require("./routes/songs");
-const commentRoutes = require("./routes/comments")
+const commentRoutes = require("./routes/comments");
+const session = require('express-session');
 
 const app = express();
 
@@ -28,18 +29,26 @@ app.use(bodyParser.json());
 
 app.use("/users", userRoutes);
 app.use("/songs", songRoutes);
-app.use("/comments", commentRoutes)
+app.use("/comments", commentRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "Not found" });
 });
 
+app.use(
+    session({
+      name: 'AuthCookie',
+      secret: "some secret string!",
+      resave: false,
+      saveUninitialized: true,
+      maxAge: 1000 * 60 * 10
+    })
+)
+
 app.use((err, req, res, next) => {
   console.log(err);
   next();
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
