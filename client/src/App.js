@@ -4,11 +4,11 @@ import axios from 'axios'
 
 function App() {
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    axios.post('http://localhost:5000/users/add', user)
-        .then(res => console.log(res.data))
-  }
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios.post('http://localhost:5000/users/add', user)
+  //       .then(res => console.log(res.data))
+  // }
 
   return (
       <div>
