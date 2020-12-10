@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const xss = require('xss');
+// const xss = require('xss');
 
 async function getUserByEmail(email) {
   const userList = await data.users.getUsers();
@@ -17,16 +17,15 @@ async function getUserByEmail(email) {
 router.post('/add', async (req, res) => {
 
   try {
-    const newUser = await data.users.addUser(xss(req.body.firstName), xss(req.body.lastName), xss(req.body.gender),
-        xss(req.body.email), xss(req.body.password));
+    const newUser = await data.users.addUser(req.body.firstName, req.body.lastName, req.body.gender,
+        req.body.email, req.body.password);
     // console.log(newUser);
-    req.session.userEmail = newUser.email;
-    req.session.loginOrNot = true;
+    // req.session.id = newUser.id;
+    // req.session.loginOrNot = true;
   } catch (e) {
-    console.log(e);
+    console.log('error' + e);
     res.sendStatus(500);
   }
-
 });
 
 router.post('/login', async (req, res) => {
