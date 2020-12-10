@@ -1,43 +1,46 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+require('dotenv').config();
+const userRoutes = require("./routes/users");
+const songRoutes = require("./routes/songs");
+const commentRoutes = require("./routes/comments")
+
 const app = express();
-const configRoutes = require('./routes');
-let bodyParser = require('body-parser');
 
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+const port = process.env.PORT || 5000;
 
-let requestCount = 0;
+//connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true })
+    .then(() => console.log(`Database connected successfully`))
+    .catch(err => console.log(err));
 
-app.use(async (req, res, next) => {
+//since mongoose promise is depreciated, we overide it with node's promise
+mongoose.Promise = global.Promise;
 
-  requestCount++;
-
-  console.log(`Total number of requests: ${requestCount}`);
-  next();
-})
-
-const pathsAccessed = {};
-
-app.use(async (req, res, next) => {
-
-  let requestMethod = req.method;
-
-  let requestBody = req.body;
-
-  if (!pathsAccessed[req.path]) pathsAccessed[req.path] = 0;
-
-  pathsAccessed[req.path]++;
-
-  console.log(`The request body is ${JSON.stringify(requestBody)},
-  and there have now been ${pathsAccessed[req.path]} requests made to ${req.path},
-   the request method is ${requestMethod}`);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-configRoutes(app);
+app.use(bodyParser.json());
 
-app.listen(5000, () => {
-  console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:5000");
+app.use("/users", userRoutes);
+app.use("/songs", songRoutes);
+app.use("/comments", commentRoutes)
+
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Not found" });
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  next();
+});
+
+
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`)
 });

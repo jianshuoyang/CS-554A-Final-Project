@@ -14,4 +14,8 @@ router.post('/add', async (req, res) => {
   }
 });
 
+// router.get('/', async (req, res) => {
+//   res.send('Hello');
+// })
+
 module.exports = router;

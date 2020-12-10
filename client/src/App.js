@@ -4,15 +4,21 @@ import axios from 'axios'
 
 function App() {
 
-  // const onSubmit = (e) => {
+  // const user = {
+  //   firstName: 'xxx',
+  //   lastName: 'xxx',
+  //   gender: 'xxx',
+  //   email: 'xxx'
+  // }
+  //
+  // const whatever = (e) => {
   //   e.preventDefault();
-  //   axios.post('http://localhost:5000/users/add', user)
-  //       .then(res => console.log(res.data))
+  //   axios.post('http://localhost:5000/users/add', user);
   // }
 
   return (
       <div>
-
+        {/*<button onClick={whatever}>addUser</button>*/}
       </div>
   );
 }
