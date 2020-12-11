@@ -63,7 +63,11 @@ export default function Login() {
     }
   }
 
+  if (userEmail) {
+    userHasAuthenticated(true);
+  }
   if (loginError) {
+
     return(
       <p style={{fontSize:'30px'}}>
           Error! <br/>
@@ -84,7 +88,12 @@ export default function Login() {
             <p style={{fontSize:'30px'}}>Login successful</p>
             <p style={{fontSize:'30px'}}>
 
-                Welcome! {userEmail}
+                Welcome! {userEmail}<br/>
+                <a
+                href= "http://localhost:3000/"
+                >
+                  Back to home
+                </a>
             </p>
         </div>
       ) : (

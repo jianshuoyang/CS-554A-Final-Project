@@ -13,18 +13,22 @@ const Home = () => {
                 <a
                     href= {url}
                 >
-                    Login with Spotify
+                    Open Spotify Online
                 </a>
 
                 
 			</p>
             
-            <p class = "login" style={{fontSize:'30px'}}> 
+            {/* <p class = "login" style={{fontSize:'30px'}}> 
                 <a
                     href= {localUrl}
                 >
                     Login locally
                 </a>
+            </p> */}
+
+            <p class = "login" style={{fontSize:'30px'}}> 
+                If user logged in, redirect to home page
             </p>
 		</div>
       
