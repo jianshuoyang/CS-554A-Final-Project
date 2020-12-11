@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useAppContext } from "../../libs/contextLib";
 import axios from 'axios'
+import { Redirect } from "react-router-dom";
+
 
 import "./Login.css";
 
@@ -16,8 +18,8 @@ export default function Login() {
   const [loginError, setLoginError] = useState(null);
 
 
-  console.log("email: " + userEmail);
-  console.log("error: " + loginError);
+  // console.log("email: " + userEmail);
+  // console.log("error: " + loginError);
 
 
 
@@ -65,7 +67,13 @@ export default function Login() {
 
   if (userEmail) {
     userHasAuthenticated(true);
+    window.sessionStorage.setItem("userEmail", userEmail);
+    // localStorage.setItem('test', 1);
+
   }
+  // const s = window.sessionStorage.getItem("userEmail")
+  // console.log("session : " + s);
+
   if (loginError) {
 
     return(
@@ -85,15 +93,15 @@ export default function Login() {
     <div>
       {userEmail ? (
         <div>
-            <p style={{fontSize:'30px'}}>Login successful</p>
+            {/* <Redirect to="/" /> */}
             <p style={{fontSize:'30px'}}>
-
-                Welcome! {userEmail}<br/>
-                <a
-                href= "http://localhost:3000/"
-                >
+              Welcome! {window.sessionStorage.getItem("userEmail")}<br/>
+              
+              <a
+                  href= "http://localhost:3000/"
+              >
                   Back to home
-                </a>
+              </a>
             </p>
         </div>
       ) : (
