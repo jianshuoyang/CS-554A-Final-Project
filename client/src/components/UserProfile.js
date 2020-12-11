@@ -1,18 +1,49 @@
-import React from 'react';
 import '../App.css';
+import React, {useState, useEffect} from 'react';
 
-const UserProfile = () => {
+
+const UserProfile = (props) => {
     const playerUrl = "https://open.spotify.com";
+    const [userData, setUserData] = useState(''); 
+    var curUrl = window.location;
+    // console.log("url: " + curUrl);
+
 
     const hash = window.location.hash.substr(1); //url of the current page
     const arHash = hash.split('='); //this creates an array with key ([0] element) and value ([1] element)
-    const hash_value =  arHash[1]; //recieve value
+    const hash_value =  arHash[1];
 
-    var access_token = hash_value;
-    
+    const accessToken = hash_value;
 
 
-    
+    useEffect(() => {
+        async function fetchData(){
+            try{
+                const url = "https://api.spotify.com/v1/me/";
+
+                const options = {
+                    headers: {
+                        Authorization: "Bearer " + accessToken
+                    }
+                };
+                fetch(url, options)
+                .then( res => res.json() )
+                // .then( data => console.log("typeof data: " + typeof data))
+                .then( data => {
+                    console.log(data);
+                    console.log("test");
+                    setUserData(data)
+                } );
+            } catch (e) {
+                console.log(e);
+                // setError(true);
+            }
+        }
+
+        fetchData();
+    }, [accessToken]);
+ 
+
     return (
 		<div>
   
@@ -31,16 +62,35 @@ const UserProfile = () => {
                 </a>
 		</p>
 
-        <p style={{fontSize:'15px'}}>
-            The user's token: {access_token}
-            
+
+        <p style={{fontSize:'50px'}}>
+            The user's profile:
 		</p>
 
-        <p style={{fontSize:'15px'}}>
-            Current Url: {window.location.href}
-            
+        <p style={{fontSize:'25px'}}>
+            Country: {userData.country} 
 		</p>
 
+        <p style={{fontSize:'25px'}}>
+            Name: {userData.display_name}
+		</p>
+
+        <p style={{fontSize:'25px'}}>
+            Email: {userData.email}
+		</p>
+
+        {/* <p style={{fontSize:'25px'}}>
+            External url:  
+                <a
+                    href= {userData.external_urls.spotify}
+                >
+                    Click to open
+                </a>
+		</p> */}
+
+        <p style={{fontSize:'25px'}}>
+            Account type: {userData.product}
+		</p>
               
       </div>
 

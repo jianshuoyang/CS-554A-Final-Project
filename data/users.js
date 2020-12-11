@@ -3,6 +3,7 @@ const users = mongoCollections.users;
 const songs = mongoCollections.songs;
 const {ObjectId} = require('mongodb');
 const songsUtil = require('./songs');
+const bcrypt = require('bcryptjs');
 
 function check(obj) {
   let flag = true;
@@ -10,6 +11,7 @@ function check(obj) {
   let lastName = obj.lastName;
   let gender = obj.gender;
   let email = obj.email;
+  let password = obj.password;
 
   if (firstName) {
     if (typeof firstName !== 'string') {
@@ -31,16 +33,43 @@ function check(obj) {
       flag = false;
     }
   }
+  if (password) {
+    flag = false;
+  }
   return flag;
+}
+
+async function validation(name, regExp) {
+  return regExp.test(name);
+}
+
+async function checkUserExists(email) {
+  const userCollection = await users();
+  const lowerCaseEmail = email.toLowerCase();
+  const user = await userCollection.findOne({email: lowerCaseEmail});
+  //console.log(user);
+  return user == null;
 }
 
 // addUser('jianshuo', 'yang', 'male', '123@qq.com');
 async function addUser(firstName, lastName, gender, email, password) {
-  if (!firstName || typeof firstName !== 'string') throw `invalid first name`;
+  if (!firstName) throw `first name cannort be null`;
+  if (typeof firstName !== 'string') throw `invalid first name`;
+
+
   if (!lastName || typeof lastName !== 'string') throw `invalid last name`;
   if (!gender || typeof gender !== 'string') throw `invalid gender input`;
   if (!email || typeof email !== 'string') throw `invalid email input`;
   if (!password || typeof password !== 'string') throw `invalid password input`;
+
+  var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  const flag1 = await validation(email, emailReg);
+  const flag2 = await checkUserExists(email);
+
+  if (!flag1 || !flag2) {
+    throw `invalid email input`;
+  }
+  const hashed = await bcrypt.hash(password, 5);
 
   const userCollection = await users();
   let newUser = {
@@ -48,7 +77,7 @@ async function addUser(firstName, lastName, gender, email, password) {
     lastName: lastName,
     gender: gender,
     email: email,
-    password: password,
+    password: hashed,
     likedSongs: []
   }
 
@@ -77,7 +106,7 @@ async function getUsers() {
 async function updateUserDelta(id, deltasObj) {
   if (!id || typeof id !== 'string') throw `invalid id input`;
   if (!deltasObj || typeof deltasObj !== 'object') throw `invalid object input`;
-  if (check(deltasObj) === false) throw `invalid object input`;
+  if (check(deltasObj) === false) throw `invalid object input or you can't change your password`;
 
   let userToBeUpdated = await getUserById(id);
 

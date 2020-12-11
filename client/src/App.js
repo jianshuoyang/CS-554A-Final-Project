@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/Home';
@@ -6,10 +6,14 @@ import UserProfile from './components/UserProfile';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register'
 
+import { AppContext } from "./libs/contextLib";
 
 
 
 function App() {
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+  
 
   if (window.location.href.includes("access_token")) {
     return (
@@ -19,6 +23,8 @@ function App() {
   }
 
   return (
+
+    <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
       <Router>
         <div>
           <header className="App-header">
@@ -35,6 +41,8 @@ function App() {
 
         </div>
       </Router>
+    </AppContext.Provider>
+      
   );
 }
 

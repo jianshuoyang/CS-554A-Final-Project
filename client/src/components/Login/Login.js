@@ -1,73 +1,139 @@
 import React, { useState } from "react";
+import { useAppContext } from "../../libs/contextLib";
+import axios from 'axios'
 
 import "./Login.css";
 
 export default function Login() {
-  const [loginState , setLoginState] = useState({
+  const { userHasAuthenticated } = useAppContext();
+
+  const [state , setState] = useState({
+    
     email : "",
     password : ""
   })
-  console.log("password: " + loginState.password);
-  
+  const [userEmail , setUserEmail] = useState("");
+  const [loginError, setLoginError] = useState(null);
+
+
+  console.log("email: " + userEmail);
+  console.log("error: " + loginError);
+
+
+
+
   const handleChange = (e) => {
     const {id , value} = e.target   
-    setLoginState(prevState => ({
+    setState(prevState => ({
         ...prevState,
         [id] : value
     }))
-}
+  }
 
-const handleSubmitClick = (e) => {
-  console.log(" button triggered");
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+    try {
+        
+        if (state.email == "") {
+            alert("email cannot be null");
+        }
+        else if (state.password == "") {
+            alert("password cannot be null");
+        }
+        else{
+          const user = {
+            email: state.email,
+            password: state.password
+          };
+          try {              
+            axios.post('http://localhost:5000/users/login', user)
+            .then(response => setUserEmail(response.data.email))
+            .catch(error => {
+                setLoginError(error.message);
+            })
+          } catch (error){
+            console.log(error);
+          }
+        }
+      
+          
+    }
+    catch(e) {
+        console.log("error: " + e);
+    }
+  }
 
-}
+  if (loginError) {
+    return(
+      <p style={{fontSize:'30px'}}>
+          Error! <br/>
+          Email or password is wrong <br/>
+          <a
+              href= "http://localhost:3000/login"
+          >
+              Back to Login
+          </a>
+      </p>
+  );
 
-
+  }
   return (
-    <div class="loginbox">
-    <form>
-        <h1 class="loginHere">Login Here</h1>
+    <div>
+      {userEmail ? (
+        <div>
+            <p style={{fontSize:'30px'}}>Login successful</p>
+            <p style={{fontSize:'30px'}}>
 
-
-        <div className="form-group text-left">
-        <label htmlFor="exampleInputEmail1">Email</label>
-        <input type="email" 
-               className="form-control" 
-               id="email" 
-               aria-describedby="emailHelp" 
-               placeholder="Email" 
-               value={loginState.email}
-               onChange={handleChange}
-        />
-        
+                Welcome! {userEmail}
+            </p>
         </div>
-        <div className="form-group text-left">
-            <label htmlFor="exampleInputPassword1">Password</label>
-            <input type="password" 
-                className="form-control" 
-                id="password" 
-                placeholder="Password"
-                value={loginState.password}
-                onChange={handleChange} 
-            />
+      ) : (
+            <div class="loginbox">
+            <form>
+              <h1 class="loginHere">Login Here</h1>
+
+
+              <div className="form-group text-left">
+              <label htmlFor="exampleInputEmail1">Email</label>
+              <input type="email" 
+                    className="form-control" 
+                    id="email" 
+                    aria-describedby="emailHelp" 
+                    placeholder="Email" 
+                    value={state.email}
+                    onChange={handleChange}
+              />
+              
+              </div>
+              <div className="form-group text-left">
+                  <label htmlFor="exampleInputPassword1">Password</label>
+                  <input type="password" 
+                      className="form-control" 
+                      id="password" 
+                      placeholder="Password"
+                      value={state.password}
+                      onChange={handleChange} 
+                  />
+              </div>
+              
+              <button
+                  class="login" 
+                  type="submit" 
+                  className="login"
+                  onClick={handleSubmitClick}
+              >
+                  Login
+              </button>
+            </form>
+
+            <a href="http://localhost:3000/register">Haven't created an account yet?</a>
+
+
+          {/* <p> email : {state.email}</p>
+          <p> password : {state.password}</p> */}
+
         </div>
-        
-        <button
-            class="login" 
-            type="submit" 
-            className="login"
-            onClick={handleSubmitClick}
-        >
-            Login
-        </button>
-    </form>
-
-    <a href="http://localhost:3000/register">Haven't created an account yet?</a>
-
-
-    {/* <p> email : {state.email}</p>
-    <p> password : {state.password}</p> */}
-
-  </div>
+      )}
+    </div>
   );
 }
