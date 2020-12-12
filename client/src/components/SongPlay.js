@@ -8,11 +8,8 @@ import FastRewindIcon from '@material-ui/icons/FastRewind';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LinearProgress from '@material-ui/core/LinearProgress';
-<<<<<<< HEAD
 import Snackbar from '@material-ui/core/Snackbar';
-=======
 import { deprecationHandler } from "moment";
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
 
 const useStyles = makeStyles({
     song_details :{
@@ -87,7 +84,6 @@ const SongPlay = (props)=>{
     const song = allState.songsPlay.song;
     console.log(song);
     const songList = allState.songsPlay.songList;
-<<<<<<< HEAD
     const track = allState.songsPlay.track;
     const [open, setOpen] = useState(undefined);
 
@@ -110,15 +106,6 @@ const SongPlay = (props)=>{
     const stopSong = () => {
         if (audio) {
 
-=======
-    const index = allState.songsPlay.currentIndex;
-    const [ currentPlay, setCurrentPlay] = useState(songsPlay.globalPlay);
-    const [ changeProgress, setChangeProgress] =  useState(undefined);
-
-    const stopSong = () => {
-        if (audio) {
-        //this.props.stopSong();
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         audio.pause();
         }
     };
@@ -145,7 +132,6 @@ const SongPlay = (props)=>{
         let  audioplay=null;
 
         if (audio === undefined) {
-<<<<<<< HEAD
             if(song.track.preview_url){
                 audioplay = new Audio(song.track.preview_url);
 
@@ -156,18 +142,10 @@ const SongPlay = (props)=>{
                 handleOpen();
                 console.log("1");
             }
-=======
-            const audioplay = new Audio(song.track.preview_url);
-            console.log(audioplay);
-            setAudio(audioplay);
-            //dispatch(playAction.updateIndex(index));
-            audioplay.play();
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         } else {
             stopSong();
             //audioplay.pause();
             dispatch(playAction.stopSong());
-<<<<<<< HEAD
             if(song.track.preview_url){
                 dispatch(playAction.playSong(song, index));
                 const audioplay = new Audio(song.track.preview_url);
@@ -178,15 +156,6 @@ const SongPlay = (props)=>{
                 handleOpen();
                 console.log("le");
             }
-=======
-            dispatch(playAction.playSong(song, index));
-            //playSong(song.track);
-            const audioplay = new Audio(song.track.preview_url);
-            console.log(audioplay);
-            setAudio(audioplay);
-            //dispatch(playAction.updateIndex(index));
-            audioplay.play();
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         }
     };
     function handleOpen () {
@@ -210,7 +179,6 @@ const SongPlay = (props)=>{
         return SongIndex;
       }
     const last =()=>{
-<<<<<<< HEAD
         if(songTrackList.length!== 0){
             let SongIndex;
             if(song){
@@ -257,29 +225,6 @@ const SongPlay = (props)=>{
             }
         }else{
             handleOpen();
-=======
-        let SongIndex = getSongIndex();
-        setProgress(0);
-        SongIndex === 0 ? audioControl(songList[songList.length - 1]) : audioControl(songList[SongIndex - 1]);
-
-    }
-    const next =()=>{
-        let SongIndex = getSongIndex();
-        setProgress(0);
-        SongIndex === songList.length - 1 ? audioControl(songList[0]) : audioControl(songList[SongIndex + 1]);
-
-    }
-
-    const handleChange = (song)=>{
-        if(songsPlay.globalPlay){
-            dispatch(playAction.pauseSong());
-            console.log("ee");
-            pauseSong();
-        }else{
-            dispatch(playAction.resumeSong());
-            resumeSong();
-            //audioControl(song);
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         }
     }
     const MAX  = 30;

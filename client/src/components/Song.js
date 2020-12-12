@@ -131,7 +131,6 @@ const Song = (props)=>{
             //pauseSong();
 
         }else{
-<<<<<<< HEAD
             if(song.track.preview_url){
                 console.log(song);
                 dispatch(playAction.playSong(song,index));
@@ -153,13 +152,6 @@ const Song = (props)=>{
             songName:song.track.name,
             playUrl:song.track.preview_url,
             songId:song.track.id,
-=======
-            console.log(song);
-            dispatch(playAction.playSong(song,index));
-            setPause(false);
-            setPlay(true);
-            //audioControl(song);
->>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         }
     }
     return (
