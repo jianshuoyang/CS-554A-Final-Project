@@ -102,6 +102,7 @@ const Song = (props)=>{
     const songR = allState.songsPlay.song;
     const dispatch = useDispatch();
     const {song, index}=props;
+    const track = song.track;
     function timeFormat(time){
         const min = Math.floor(time/60000);
         const sec = ((time % 60000) / 1000).toFixed(0);
@@ -146,9 +147,9 @@ const Song = (props)=>{
         //console.log(song);
         const addSong = {
             artist: song.track.artists[0].name,
-            album: song.track.album?song.track.album.name : '',
+            album: song.track.album?song.track.album.name : '-',
             artistId:song.track.artists[0].id,
-            albumId:song.track.album?song.track.album.id : '',
+            albumId:song.track.album?song.track.album.id : '-',
             songName:song.track.name,
             playUrl:song.track.preview_url,
             songId:song.track.id,
@@ -171,12 +172,12 @@ const Song = (props)=>{
                 <p>{song.track? song.track.name : song.name}</p>
             </div>
 
-            <Link to={song.track?`/albumList/${song.track.artists[0].id}`:`/albumList/${song.artists[0].id}`} className={classes.link}>
+            <Link to={track?`/albumList/${track.artists[0].id}`:`/albumList/${song.artists[0].id}`} className={classes.link}>
             <div className={classes.song_artist}>
-                <p>{song.track?song.track.artists[0].name:song.artists[0].name}</p>
+                <p>{song.track?track.artists[0].name:song.artists[0].name}</p>
             </div>
             </Link>
-            {song.track?
+            {song.track.album?
             <Link to={`/albums/songsList/${song.track.album.id}`} className={classes.link}>
             <div className={classes.song_album}>
                 <p>{song.track?song.track.album.name:'-'}</p>

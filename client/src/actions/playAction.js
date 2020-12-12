@@ -2,7 +2,7 @@ const playSong = (song,currentIndex)=>{
     return {
         type: 'PLAY_SONG',
         song,
-        currentIndex
+        currentIndex,
     }
 };
 const toSong = (song)=>{
@@ -34,10 +34,11 @@ const resumeSong = () => {
       type: 'RESUME_SONG'
     }
 };
-const updateSongList = (songList) => {
+const updateSongList = (songList, track) => {
     return {
       type: 'UPDATE_SONG_LIST',
-      songList
+      songList,
+      track,
     }
 };
 

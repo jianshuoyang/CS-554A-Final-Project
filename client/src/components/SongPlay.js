@@ -82,7 +82,6 @@ const SongPlay = (props)=>{
     const allState = useSelector((state) => state);
     const songsPlay = allState.songsPlay;
     const song = allState.songsPlay.song;
-    console.log(song);
     const songList = allState.songsPlay.songList;
     const track = allState.songsPlay.track;
     const [open, setOpen] = useState(undefined);
@@ -127,8 +126,6 @@ const SongPlay = (props)=>{
 
 
     const audioControl = (song, index) => {
-        console.log(song);
-        //const { playSong, stopSong } = this.props;
         let  audioplay=null;
 
         if (audio === undefined) {
@@ -137,6 +134,7 @@ const SongPlay = (props)=>{
 
                 console.log(audioplay);
                 setAudio(audioplay);
+                dispatch(playAction.playSong(song, index));
                 audioplay.play();
             }else{
                 handleOpen();
@@ -166,7 +164,7 @@ const SongPlay = (props)=>{
       };
 
     const getSongIndex = () => {
-        const SongIndex = songList.map((everySong, index) => {
+        const SongIndex = songTrackList.map((everySong, index) => {
           if (everySong.track.id === song.track.id) {
             return index;
           } else {
@@ -216,9 +214,9 @@ const SongPlay = (props)=>{
                 pauseSong();
             }else{
                 if(song){
-                    dispatch(playAction.resumeSong());
-                    resumeSong();
-                    //audioControl(song);
+                    // dispatch(playAction.resumeSong());
+                    // resumeSong();
+                    audioControl(song);
                 }else{
                     audioControl(songTrackList[0])
                 }
@@ -307,7 +305,7 @@ const SongPlay = (props)=>{
                     open={open}
                     autoHideDuration={6000}
                     onClose={handleClose}
-                    message="Not Availiable"
+                    message="Not Available"
                 />
 
           </div>

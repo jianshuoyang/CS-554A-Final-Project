@@ -178,10 +178,9 @@ const SongList = (props)=>{
                             setDate(body.release_date);
                         }
                         if(type === 'song'){
-                            // console.log(body);
                             setTotal(Math.ceil(body.total / 10));
                             setSong(body.items);
-                            dispatch(playAction.updateSongList(body.items));
+                            dispatch(playAction.updateSongList(body.items, props.match.params.type));
 
                         }
                         setLoading(false);
@@ -241,9 +240,15 @@ const SongList = (props)=>{
     }
 
     const buildList = (song, index)=>{
-        console.log(index);
+        //console.log("chuan",song);
+        let NewSong  = null;
+        if(!song.track){
+            NewSong = {track:song};
+        }else{
+            NewSong =  song;
+        }
         return (
-            <Song song={song} key={song.id?song.id:song.track.id} index={index}></Song>
+            <Song song={NewSong} key={song.id?song.id:song.track.id} index={index}></Song>
         )
     }
     let related_album = [];

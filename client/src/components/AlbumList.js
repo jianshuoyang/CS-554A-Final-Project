@@ -5,6 +5,8 @@ import { Card, CardActionArea,  Grid,  makeStyles,  Box, Tabs, Tab, AppBar } fro
 import '../App.css';
 import Song from './Song';
 import Information from './Infotmation';
+import { useSelector, useDispatch } from 'react-redux';
+import playAction from '../actions/playAction'
 const useStyles = makeStyles({
     card: {
 		maxWidth: 300,
@@ -73,6 +75,9 @@ const useStyles = makeStyles({
         marginRight:'30px',
         width: 'auto',
     },
+    empty:{
+        width: '250px',
+    }
 });
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -118,6 +123,7 @@ const AlbumList = (props) => {
     const [id, setId] = useState(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError]  =  useState(false);
+    const dispatch = useDispatch();
 
 	let card = null;
 
@@ -163,6 +169,8 @@ const AlbumList = (props) => {
                         }
                         if(type === 'topSong'){
                             setTop(body.tracks);
+                            dispatch(playAction.updateSongList(body.tracks, 'albums'));
+
                         }
                         setLoading(false);
                     }
@@ -237,8 +245,11 @@ const AlbumList = (props) => {
         return buildList(album);
     });
     let topList = top && top.map((song) => {
+        let NewSong = {
+            track: song
+        }
         return (
-            <Song song={song} key={song.id}></Song>
+            <Song song={NewSong} key={song.id}></Song>
         )
     });
 
@@ -278,6 +289,7 @@ const AlbumList = (props) => {
             </TabPanel>
             <TabPanel value={value} index={1}>
             <div className={classes.song_header_container}>
+                <div className={classes.empty}></div>
                 <div className={classes.song_title_header}>
                     <p>Title</p>
                 </div>
