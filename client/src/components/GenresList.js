@@ -87,7 +87,6 @@ const GenresList = (props) =>{
                     request.get(options, function(error, response, body) {
                     if(error){
                         setError(true);
-                        setLoading(false);
                     }else{
                     setTotal(Math.ceil(body.categories.total / 24));
                     setGenresList(body.categories.items);

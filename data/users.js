@@ -53,7 +53,10 @@ async function checkUserExists(email) {
 
 // addUser('jianshuo', 'yang', 'male', '123@qq.com');
 async function addUser(firstName, lastName, gender, email, password) {
-  if (!firstName || typeof firstName !== 'string') throw `invalid first name`;
+  if (!firstName) throw `first name cannort be null`;
+  if (typeof firstName !== 'string') throw `invalid first name`;
+
+
   if (!lastName || typeof lastName !== 'string') throw `invalid last name`;
   if (!gender || typeof gender !== 'string') throw `invalid gender input`;
   if (!email || typeof email !== 'string') throw `invalid email input`;

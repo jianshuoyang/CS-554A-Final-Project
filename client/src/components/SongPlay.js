@@ -8,6 +8,7 @@ import FastRewindIcon from '@material-ui/icons/FastRewind';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { deprecationHandler } from "moment";
 
 const useStyles = makeStyles({
     song_details :{
@@ -81,38 +82,27 @@ const SongPlay = (props)=>{
     const songsPlay = allState.songsPlay;
     const song = allState.songsPlay.song;
     const songList = allState.songsPlay.songList;
-    const track = allState.songsPlay.track;
-
-    let songTrackList = [];
-
-        if(track==='albums'){
-            songList.map((everySong)=>{
-                let song = {
-                    track: everySong
-                }
-                songTrackList.push(song);
-
-
-            });
-        }else{
-            songTrackList =  songList;
-        }
-
+    const index = allState.songsPlay.currentIndex;
+    const [ currentPlay, setCurrentPlay] = useState(songsPlay.globalPlay);
+    const [ changeProgress, setChangeProgress] =  useState(undefined);
 
     const stopSong = () => {
         if (audio) {
+        //this.props.stopSong();
         audio.pause();
         }
     };
 
     const pauseSong = () => {
-        if (audio){
+        if (audio) {
+        //this.props.pauseSong();
         audio.pause();
         }
     };
 
     const resumeSong = () => {
         if (audio) {
+        //this.props.resumeSong();
         audio.play();
 
         }
@@ -120,61 +110,51 @@ const SongPlay = (props)=>{
 
 
     const audioControl = (song, index) => {
+        console.log(song);
         //const { playSong, stopSong } = this.props;
 
         if (audio === undefined) {
-            if(song.track.preview_url){
-                const audioplay = new Audio(song.track.preview_url);
-
-                console.log(audioplay);
-                setAudio(audioplay);
-                audioplay.play();
-            }
+            const audioplay = new Audio(song.track.preview_url);
+            console.log(audioplay);
+            setAudio(audioplay);
+            //dispatch(playAction.updateIndex(index));
+            audioplay.play();
         } else {
             stopSong();
             dispatch(playAction.stopSong());
-            if(song.track.preview_url){
-                dispatch(playAction.playSong(song, index));
-                const audioplay = new Audio(song.track.preview_url);
-                console.log(audioplay);
-                setAudio(audioplay);
-                audioplay.play();
-            }
+            dispatch(playAction.playSong(song, index));
+            //playSong(song.track);
+            const audioplay = new Audio(song.track.preview_url);
+            console.log(audioplay);
+            setAudio(audioplay);
+            //dispatch(playAction.updateIndex(index));
+            audioplay.play();
         }
     };
 
     const getSongIndex = () => {
-        let SongIndex = null;
-        songTrackList.map((everySong, index) => {
+        const SongIndex = songList.map((everySong, index) => {
+          if (everySong.track.id === song.track.id) {
+            return index;
+          } else {
+            return undefined;
+          }
+        }).filter(item => {
+          return item !== undefined;
+        })[0];
 
-                if (everySong.track.id === song.track.id) {
-                    return SongIndex = index;
-                }
-
-        });
         return SongIndex;
-   }
+      }
     const last =()=>{
-        let SongIndex;
-        if(song){
-            SongIndex = getSongIndex();
-        }else{
-            SongIndex = 0;
-        }
+        let SongIndex = getSongIndex();
         setProgress(0);
-        SongIndex === 0 ? audioControl(songTrackList[songTrackList.length - 1]) : audioControl(songTrackList[SongIndex - 1]);
+        SongIndex === 0 ? audioControl(songList[songList.length - 1]) : audioControl(songList[SongIndex - 1]);
 
     }
     const next =()=>{
-        let SongIndex;
-        console.log(songTrackList);
-        if(song){
-            SongIndex = getSongIndex();
-        }else{
-            SongIndex = songTrackList.length - 1
-        }
+        let SongIndex = getSongIndex();
         setProgress(0);
-        SongIndex === songTrackList.length - 1 ? audioControl(songTrackList[0]) : audioControl(songTrackList[SongIndex + 1]);
+        SongIndex === songList.length - 1 ? audioControl(songList[0]) : audioControl(songList[SongIndex + 1]);
 
     }
 
@@ -184,13 +164,9 @@ const SongPlay = (props)=>{
             console.log("ee");
             pauseSong();
         }else{
-            if(song){
-                dispatch(playAction.resumeSong());
-                resumeSong();
-                //audioControl(song);
-            }else{
-                audioControl(songTrackList[0])
-            }
+            dispatch(playAction.resumeSong());
+            resumeSong();
+            //audioControl(song);
         }
     }
     const MAX  = 30;

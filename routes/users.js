@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
+const bcrypt = require('bcryptjs');
+
 // const xss = require('xss');
 
 async function getUserByEmail(email) {
@@ -19,12 +21,13 @@ router.post('/add', async (req, res) => {
   try {
     const newUser = await data.users.addUser(req.body.firstName, req.body.lastName, req.body.gender,
         req.body.email, req.body.password);
-    // console.log(newUser);
-    // req.session.id = newUser.id;
-    // req.session.loginOrNot = true;
+    res.json(newUser);
+
   } catch (e) {
-    console.log('error' + e);
-    res.sendStatus(500);
+    console.log('error: ' + e);
+		res.status(500).json(e);
+
+    // res.sendStatus(500);
   }
 });
 
@@ -32,16 +35,19 @@ router.post('/login', async (req, res) => {
 
   try {
 
-    let user = await getUserByEmail(xss(req.body.email));
-    let flag = await bcrypt.compare(xss(req.body.password), user.password);
+    let user = await getUserByEmail(req.body.email);
+    let flag = await bcrypt.compare(req.body.password, user.password);
     if (flag) {
-      req.session.loginOrNot = true;
-      req.session.userEmail = user.email;
+      // req.session.loginOrNot = true;
+      // req.session.userEmail = user.email;
+      res.json(user);
+
     } else {
-      res.status(401);
+      res.status(500).json("error: the email or password is wrong");
     }
   } catch (e) {
-    res.status(401).render('utils/index', {error1: true})
+    // console.log("error: " + e);
+		res.status(500).json(e);
   }
 
 })
