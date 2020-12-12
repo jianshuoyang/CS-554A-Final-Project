@@ -5,8 +5,6 @@ import { Card, CardActionArea,  Grid,  makeStyles,  Box, Tabs, Tab, AppBar } fro
 import '../App.css';
 import Song from './Song';
 import Information from './Infotmation';
-import { useSelector, useDispatch } from 'react-redux';
-import playAction from '../actions/playAction'
 const useStyles = makeStyles({
     card: {
 		maxWidth: 300,
@@ -103,7 +101,6 @@ function TabPanel(props) {
   }
 
 const AlbumList = (props) => {
-    const dispatch = useDispatch();
     const [value, setValue] = React.useState(0);
     //const regex = /(<([^>]+)>)/gi;
     const classes = useStyles();
@@ -151,7 +148,6 @@ const AlbumList = (props) => {
                     request.get(options, function(error, response, body) {
                     if(error){
                         setError(true);
-                        setLoading(false);
                     } else {
                         if(type === 'artist'){
                             setSingerName(body.name);
@@ -167,7 +163,6 @@ const AlbumList = (props) => {
                         }
                         if(type === 'topSong'){
                             setTop(body.tracks);
-                            dispatch(playAction.updateSongList(body.tracks, 'albums'));
                         }
                         setLoading(false);
                     }
@@ -242,16 +237,8 @@ const AlbumList = (props) => {
         return buildList(album);
     });
     let topList = top && top.map((song) => {
-        let NewSong = null;
-        if(!song.track){
-            NewSong = {
-                track:song
-            }
-        }else{
-            NewSong =  song;
-        }
         return (
-            <Song song={NewSong} key={song.id}></Song>
+            <Song song={song} key={song.id}></Song>
         )
     });
 

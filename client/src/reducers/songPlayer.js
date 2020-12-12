@@ -12,7 +12,7 @@ const initalState = {
 }
 let copyState = null
 const songPlayer = (state = initalState, action) => {
-    const {type, song, songList, currentIndex, track} = action;
+    const {type, song, songList, currentIndex} = action;
 
     switch(type) {
         case "PLAY_SONG":
@@ -55,7 +55,6 @@ const songPlayer = (state = initalState, action) => {
         case "UPDATE_SONG_LIST":
             copyState = JSON.parse(JSON.stringify(state))
             copyState.songList = songList;
-            copyState.track = track;
             return copyState
 
         case "UPDATE_INDEX":

@@ -181,7 +181,7 @@ const SongList = (props)=>{
                             // console.log(body);
                             setTotal(Math.ceil(body.total / 10));
                             setSong(body.items);
-                            dispatch(playAction.updateSongList(body.items, props.match.params.type));
+                            dispatch(playAction.updateSongList(body.items));
 
                         }
                         setLoading(false);
@@ -247,20 +247,12 @@ const SongList = (props)=>{
         )
     }
     let related_album = [];
-    let NewSong = null;
     let card = song && song.map((song, index) => {
-        if(!song.track){
-            NewSong = {
-                track:song
-            }
-        }else{
-            NewSong =  song;
-        }
 
         if(song.track){
             related_album.push(song.track.album.images[1]);
         }
-        return buildList(NewSong, index);
+        return buildList(song, index);
     });
 
     if(loading){

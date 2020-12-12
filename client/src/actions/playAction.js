@@ -34,11 +34,10 @@ const resumeSong = () => {
       type: 'RESUME_SONG'
     }
 };
-const updateSongList = (songList, track) => {
+const updateSongList = (songList) => {
     return {
       type: 'UPDATE_SONG_LIST',
-      songList,
-      track
+      songList
     }
 };
 

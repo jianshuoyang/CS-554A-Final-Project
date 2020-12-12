@@ -7,7 +7,6 @@ import moment from "moment";
 import { makeStyles } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
-import axios from 'axios'
 
 const useStyles = makeStyles({
 	song_li: {
@@ -109,7 +108,11 @@ const Song = (props)=>{
         return min+":"+(sec < 10 ? "0" : "")+sec;
     }
 
-
+    // if(songsPlay.globalPlay&&song.track.id===songR.track.id){
+    //     setPlay(true);
+    // }else{
+    //     setPlay(false);
+    // }
     useEffect(()=>{
         if(songsPlay.globalPlay&&song.track.id===songR.track.id){
             setPlay(true);
@@ -128,6 +131,7 @@ const Song = (props)=>{
             //pauseSong();
 
         }else{
+<<<<<<< HEAD
             if(song.track.preview_url){
                 console.log(song);
                 dispatch(playAction.playSong(song,index));
@@ -149,12 +153,15 @@ const Song = (props)=>{
             songName:song.track.name,
             playUrl:song.track.preview_url,
             songId:song.track.id,
+=======
+            console.log(song);
+            dispatch(playAction.playSong(song,index));
+            setPause(false);
+            setPlay(true);
+            //audioControl(song);
+>>>>>>> f87d840de9c9e6629a1f34a1ff43473c828d42c1
         }
-        console.log(addSong);
-        axios.post('http://localhost:5000/songs/addLikeSongs', addSong);
-
     }
-
     return (
         <li className={classes.song_li} >
             <div  className={classes.play_control} onClick={()=>handleChange(song, index)}>
@@ -163,7 +170,7 @@ const Song = (props)=>{
                 <PlayCircleOutlineIcon  ></PlayCircleOutlineIcon>
                 }
             </div>
-            <div className={classes.song_icon} onClick={()=>handleAdd(song)}>
+            <div className={classes.song_icon}>
                 <i>
                 <LibraryAddOutlined></LibraryAddOutlined>
                 </i>
@@ -177,14 +184,14 @@ const Song = (props)=>{
                 <p>{song.track?song.track.artists[0].name:song.artists[0].name}</p>
             </div>
             </Link>
-            {song.track.album?
+            {song.track?
             <Link to={`/albums/songsList/${song.track.album.id}`} className={classes.link}>
             <div className={classes.song_album}>
                 <p>{song.track?song.track.album.name:'-'}</p>
             </div>
             </Link>:
             <div className={classes.song_album}>
-                <p>{song.album?song.album.name:'-'}</p>
+                <p>{song.album?song.album.name:song.name?song.name:'-'}</p>
             </div>}
 
             <div className={classes.song_added}>
