@@ -8,6 +8,7 @@ import FastRewindIcon from '@material-ui/icons/FastRewind';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles({
     song_details :{
@@ -46,7 +47,7 @@ const useStyles = makeStyles({
         width: '100%',
         bottom: 0,
         left: 0,
-        background: 'rgb(40, 40, 40)',
+        background: '#006600',
         height: '80px',
         zIndex: 2,
     },
@@ -80,8 +81,10 @@ const SongPlay = (props)=>{
     const allState = useSelector((state) => state);
     const songsPlay = allState.songsPlay;
     const song = allState.songsPlay.song;
+    console.log(song);
     const songList = allState.songsPlay.songList;
     const track = allState.songsPlay.track;
+    const [open, setOpen] = useState(undefined);
 
     let songTrackList = [];
 
@@ -101,6 +104,7 @@ const SongPlay = (props)=>{
 
     const stopSong = () => {
         if (audio) {
+
         audio.pause();
         }
     };
@@ -121,17 +125,22 @@ const SongPlay = (props)=>{
 
     const audioControl = (song, index) => {
         //const { playSong, stopSong } = this.props;
+        let  audioplay=null;
 
         if (audio === undefined) {
             if(song.track.preview_url){
-                const audioplay = new Audio(song.track.preview_url);
+                audioplay = new Audio(song.track.preview_url);
 
                 console.log(audioplay);
                 setAudio(audioplay);
                 audioplay.play();
+            }else{
+                handleOpen();
+                console.log("1");
             }
         } else {
             stopSong();
+            //audioplay.pause();
             dispatch(playAction.stopSong());
             if(song.track.preview_url){
                 dispatch(playAction.playSong(song, index));
@@ -139,9 +148,18 @@ const SongPlay = (props)=>{
                 console.log(audioplay);
                 setAudio(audioplay);
                 audioplay.play();
+            }else{
+                handleOpen();
+                console.log("le");
             }
         }
     };
+    function handleOpen () {
+        setOpen(true);
+    };
+    function handleClose ()  {
+        setOpen(false);
+      };
 
     const getSongIndex = () => {
         let SongIndex = null;
@@ -155,42 +173,52 @@ const SongPlay = (props)=>{
         return SongIndex;
    }
     const last =()=>{
-        let SongIndex;
-        if(song){
-            SongIndex = getSongIndex();
+        if(songTrackList.length!== 0){
+            let SongIndex;
+            if(song){
+                SongIndex = getSongIndex();
+            }else{
+                SongIndex = 0;
+            }
+            setProgress(0);
+            SongIndex === 0 ? audioControl(songTrackList[songTrackList.length - 1]) : audioControl(songTrackList[SongIndex - 1]);
         }else{
-            SongIndex = 0;
+            handleOpen();
         }
-        setProgress(0);
-        SongIndex === 0 ? audioControl(songTrackList[songTrackList.length - 1]) : audioControl(songTrackList[SongIndex - 1]);
-
     }
     const next =()=>{
-        let SongIndex;
-        console.log(songTrackList);
-        if(song){
-            SongIndex = getSongIndex();
+        if(songTrackList.length!== 0){
+            let SongIndex;
+            console.log(songTrackList);
+            if(song){
+                SongIndex = getSongIndex();
+            }else{
+                SongIndex = songTrackList.length - 1
+            }
+            setProgress(0);
+            SongIndex === songTrackList.length - 1 ? audioControl(songTrackList[0]) : audioControl(songTrackList[SongIndex + 1]);
         }else{
-            SongIndex = songTrackList.length - 1
+            handleOpen();
         }
-        setProgress(0);
-        SongIndex === songTrackList.length - 1 ? audioControl(songTrackList[0]) : audioControl(songTrackList[SongIndex + 1]);
-
     }
 
     const handleChange = (song)=>{
-        if(songsPlay.globalPlay){
-            dispatch(playAction.pauseSong());
-            console.log("ee");
-            pauseSong();
-        }else{
-            if(song){
-                dispatch(playAction.resumeSong());
-                resumeSong();
-                //audioControl(song);
+        if(song){
+            if(songsPlay.globalPlay){
+                dispatch(playAction.pauseSong());
+                console.log("ee");
+                pauseSong();
             }else{
-                audioControl(songTrackList[0])
+                if(song){
+                    dispatch(playAction.resumeSong());
+                    resumeSong();
+                    //audioControl(song);
+                }else{
+                    audioControl(songTrackList[0])
+                }
             }
+        }else{
+            handleOpen();
         }
     }
     const MAX  = 30;
@@ -225,10 +253,15 @@ const SongPlay = (props)=>{
       }
     }, [song, songsPlay.globalPlay]);
     useEffect(() => {
-        if(songsPlay.globalPlay){
-            audioControl(song);
+        if(songsPlay.playing === songsPlay.globalPlay){
+            if(songsPlay.globalPlay){
+                audioControl(song);
+            }else{
+                pauseSong();
+            }
         }else{
-            pauseSong();
+            audioControl(song);
+            console.log('d');
         }
     }, [songsPlay.globalPlay, song]);
 
@@ -260,6 +293,16 @@ const SongPlay = (props)=>{
                        <LinearProgress variant="determinate" value={normalise(progress)} />
                     </div>
                 </div>
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                    }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message="Not Availiable"
+                />
 
           </div>
       )

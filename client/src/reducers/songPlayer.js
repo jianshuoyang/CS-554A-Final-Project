@@ -16,15 +16,20 @@ const songPlayer = (state = initalState, action) => {
 
     switch(type) {
         case "PLAY_SONG":
-            console.log(state, action)
             copyState = JSON.parse(JSON.stringify(state))
-            console.log(copyState)
-            // let copyState = [...state];
             copyState.globalPlay = true;
             copyState.song = song;
             copyState.playing = true;
             copyState.currentIndex  =  currentIndex;
             console.log(copyState);
+            return copyState
+
+        case "TO_SONG":
+            copyState = JSON.parse(JSON.stringify(state))
+            copyState.globalPlay = false;
+            copyState.song = song;
+            copyState.playing = true;
+            copyState.currentIndex  =  currentIndex;
             return copyState
 
         case "STOP_SONG":

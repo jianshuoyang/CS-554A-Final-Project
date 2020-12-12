@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         marginRight:'30px',
         '&:hover':{
             color: '#000000',
-            background: '#ccffcc'
+            background: '#f2ffe5'
         }
     },
     song_title_header:{
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
         position: 'relative',
         top: '10px',
         '&:hover':{
-            color: '#0fff00',
+            color: '#8c8c8c',
         }
     },
     song_length_header: {
@@ -78,7 +78,7 @@ const useStyles = makeStyles({
         position: 'relative',
         top: '10px',
         '&:hover':{
-            color: '#0fff00',
+            color: '#8c8c8c',
         }
 
     },
@@ -134,6 +134,8 @@ const Song = (props)=>{
                 setPause(false);
                 setPlay(true);
                 //audioControl(song);
+            }else{
+                dispatch(playAction.toSong(song));
             }
         }
     }

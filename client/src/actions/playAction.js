@@ -5,6 +5,13 @@ const playSong = (song,currentIndex)=>{
         currentIndex
     }
 };
+const toSong = (song)=>{
+    return {
+        type: 'TO_SONG',
+        song,
+    }
+
+}
 const updateIndex  =  (currentIndex)=>{
     return {
         type: 'UPDATE_INDEX',
@@ -41,5 +48,6 @@ module.exports={
     pauseSong,
     resumeSong,
     updateSongList,
-    updateIndex
+    updateIndex,
+    toSong
 };
