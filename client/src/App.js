@@ -11,9 +11,9 @@ import GenresList from './components/GenresList'
 import PlayList from './components/PlayList'
 import SongList from './components/SongList'
 import Songplay from './components/SongPlay'
-
+import TopNav from './components/Nav/TopNav'
 import { AppContext } from "./libs/contextLib";
-
+import Search from './components/Search';
 
 
 function App() {
@@ -46,88 +46,13 @@ function App() {
         
     );
   }
-  function handleLogout() {
-    window.sessionStorage.setItem("userEmail", "");
-    userHasAuthenticated(false);
-    
-  }
-  const url = 'https://accounts.spotify.com/authorize?show_dialog=true&client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback';
-
+  
   return (
     // !isAuthenticating && (
       <Router>
         <div>
-          <header className="App-header">
-            
-            {(isAuthenticated) ? (
-              <div>
-                <button
-                    class="login" 
-                    className="login"
-                    onClick={handleLogout}
-                >
-                    Logout
-                </button>
-                <p class = "login" style={{fontSize:'30px'}}> 
-                      To logout you might need double click
-                  </p>
-                <p class = "login" style={{fontSize:'30px'}}> 
-                      <a
-                          href= "http://localhost:3000/register"
-                      >
-                          Register
-                      </a>
-                  </p>
-              </div>  
-              ) : (
-                <div>
-                  <h1 className="App-title">
-                    Welcome To Our Music Website
-                  </h1>
-                  <p class = "login" style={{fontSize:'30px'}}>
-
-                      <a
-                          href= "http://localhost:3000/"
-                      >
-                          Categories
-                      </a>
-
-                      
-                  </p>
-                  <p class = "login" style={{fontSize:'30px'}}>
-
-                      <a
-                          href= "http://localhost:3000/login"
-                      >
-                          Login
-                      </a>
-
-                      
-                  </p>
-                  
-                  <p class = "login" style={{fontSize:'30px'}}> 
-                      <a
-                          href= "http://localhost:3000/register"
-                      >
-                          Register
-                      </a>
-                  </p>
-
-                  <p class = "login" style={{fontSize:'30px'}}>
-
-                  <a
-                      href= {url}
-                  >
-                      Open Spotify Online
-                  </a>
-
-                
-			</p>
-                </div>
-              )}
-          </header>
-          {/* Rupu's play components */}
-          <Songplay></Songplay>
+        <TopNav></TopNav>
+        <Songplay></Songplay>
 
 
           <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
@@ -142,6 +67,8 @@ function App() {
             <Route exact path='/:categories/playList' component={PlayList} />
             <Route exact path='/:type/songsList/:id' component={SongList} />
             <Route exact path='/albumList/:id' component={AlbumList} />
+            {/* Donglin's routes */}
+            <Route exact path='/search' component={Search} />
           </AppContext.Provider>
 
           
