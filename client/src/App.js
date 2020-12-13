@@ -14,6 +14,7 @@ import Songplay from './components/SongPlay'
 import TopNav from './components/Nav/TopNav'
 import { AppContext } from "./libs/contextLib";
 import Search from './components/Search';
+import LikedPage from './components/LikedPage';
 
 
 function App() {
@@ -59,8 +60,11 @@ function App() {
             {/* Yichao's routes */}
             <Route exact path="/home" component={Home} />
             <Route exact path="/userprofile" component={UserProfile} />
+
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            {/* Weijie's routes */}
+            <Route exact path="/likedpage" component={LikedPage} />
 
             {/* Rupu's routes */}
             <Route exact path='/' component={GenresList} />
