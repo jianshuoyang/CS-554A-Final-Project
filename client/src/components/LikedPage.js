@@ -46,6 +46,32 @@ const columns = [
 //     console.log({error:e})
 // }
 
+// 拿到 了数据。写成这个格式get()==>obj
+// let Nsong = {
+//     track: {
+//         album:{
+//             id: obj.albumId,
+//             name: obj.albumName,
+//         },
+//         artists: [
+//             {
+//                 id:obj.artistId,
+//                 name: obj.artistName
+//             }
+//         ],
+//         name: obj.title,
+//         preview_url: obj.playUrl,
+//         id:obj.songId
+//     }
+// },
+// import playAction from '../actions/playAction'
+// import {useDispatch} from 'react-redux';
+// const dispatch = useDispatch();
+// if(Nsong.track.preview_url){
+//     dispatch(playAction.playSong(song));
+// }else{
+//     dispatch(playAction.toSong(song))
+// }
 
 function createData(name, singer, albumName) {
     return { name, singer, albumName, remove:" remove"};

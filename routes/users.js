@@ -61,12 +61,14 @@ router.post('/addsong', async(req, res) => {
       artist: req.body.artist,
       artistId: req.body.artistId,
       albumName: req.body.albumName,
-      albumId: req.body.albumId
+      albumId: req.body.albumId,
+      playUrl: req.body.playUrl,
+      songId: req.body.songId
     };
     const user = await getUserByEmail(req.body.userEmail);
 
     //add song to song list
-    const songId = await data.songs.addSong(newSong.title, newSong.artist, newSong.artistId, newSong.albumName, newSong.albumId);
+    const songId = await data.songs.addSong(newSong.title, newSong.artist, newSong.artistId, newSong.albumName, newSong.albumId,newSong.playUrl,newSong.songId);
     //add song to user favorite song list
     await data.users.addSongToUser(user._id.toString(), songId.toString());
 

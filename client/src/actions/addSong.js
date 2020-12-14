@@ -9,7 +9,10 @@ export default async function addSong(songObj) {
             artist: songObj.artist,
             artistId: songObj.artistId,
             albumName: songObj.albumName,
-            albumId: songObj.albumId
+            albumId: songObj.albumId,
+            playUrl:songObj.playUrl,
+            songId:  songObj.songId
+
         }
         await axios.post('http://localhost:5000/users/addsong', newSong);
     } catch(e) {

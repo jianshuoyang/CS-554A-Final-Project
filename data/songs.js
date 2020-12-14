@@ -5,10 +5,12 @@ const {ObjectId} = require('mongodb');
 const commentsUtil = require('./comments');
 
 // addSong('Hello', 'adele', 'whatever');
-async function addSong(title, artist, artistId, albumName, albumId) {
+async function addSong(title, artist, artistId, albumName, albumId,playUrl,songId) {
   if (!title || typeof title !== 'string') throw `invalid song name`;
   if (!artist || typeof artist !== 'string') throw `invalid singer name`;
   if (!albumName || typeof albumName !== 'string') throw 'invalid album name';
+  //if (!playUrl || typeof playUrl !== 'string') throw 'invalid play Url';
+  if (!songId || typeof songId !== 'string') throw 'invalid songId';
 
   const songCollections = await songs();
 
@@ -18,6 +20,8 @@ async function addSong(title, artist, artistId, albumName, albumId) {
     artistId: artistId,
     albumName: albumName,
     albumId: albumId,
+    playUrl: playUrl,
+    songId: songId,
     comments: []
   };
 

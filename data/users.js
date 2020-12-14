@@ -142,7 +142,9 @@ async function addSongToUser(id, songId) {
     artistId: songObj.artistId,
     albumName: songObj.albumName,
     albumId: songObj.albumId,
-    comments: songObj.comments
+    comments: songObj.comments,
+    playUrl: songObj.playUrl,
+    songId: songObj.songId
   };
   const userCollection = await users();
   await userCollection.updateOne({_id: objId}, {$addToSet: {likedSongs: newSong}});

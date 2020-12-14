@@ -82,6 +82,7 @@ const SongPlay = (props)=>{
     const allState = useSelector((state) => state);
     const songsPlay = allState.songsPlay;
     const song = allState.songsPlay.song;
+    console.log(song);
     const songList = allState.songsPlay.songList;
     const track = allState.songsPlay.track;
     const [open, setOpen] = useState(undefined);
@@ -164,17 +165,18 @@ const SongPlay = (props)=>{
       };
 
     const getSongIndex = () => {
-        const SongIndex = songTrackList.map((everySong, index) => {
+        let songIndex = null;
+        songTrackList.map((everySong, index) => {
           if (everySong.track.id === song.track.id) {
-            return index;
-          } else {
-            return undefined;
+              songIndex = index;
+            return songIndex;
           }
-        }).filter(item => {
-          return item !== undefined;
-        })[0];
-
-        return SongIndex;
+        });
+        if(songIndex){
+            return songIndex;
+        }else{
+            return 0;
+        }
       }
     const last =()=>{
         if(songTrackList.length!== 0){
