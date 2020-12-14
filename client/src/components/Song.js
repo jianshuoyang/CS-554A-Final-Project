@@ -7,7 +7,6 @@ import moment from "moment";
 import { makeStyles } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
-import addSong from '../actions/addSong'
 
 const useStyles = makeStyles({
 	song_li: {
@@ -144,21 +143,17 @@ const Song = (props)=>{
             }
         }
     }
-    async function handleAdd(song){
-        if(window.sessionStorage.userEmail){
-            console.log(window.sessionStorage.userEmail);
-            const favoriteSong = {
-                artist: song.track.artists[0].name,
-                albumName: song.track.album?song.track.album.name : '-',
-                artistId:song.track.artists[0].id,
-                albumId:song.track.album?song.track.album.id : '-',
-                title:song.track.name,
-                playUrl:song.track.preview_url,
-                songId:song.track.id,
-            }
-            await addSong(favoriteSong);
+    const handleAdd=(song)=>{
+        //console.log(song);
+        const addSong = {
+            artist: song.track.artists[0].name,
+            album: song.track.album?song.track.album.name : '-',
+            artistId:song.track.artists[0].id,
+            albumId:song.track.album?song.track.album.id : '-',
+            songName:song.track.name,
+            playUrl:song.track.preview_url,
+            songId:song.track.id,
         }
-
     }
     return (
         <li className={classes.song_li} >
@@ -168,7 +163,7 @@ const Song = (props)=>{
                 <PlayCircleOutlineIcon  ></PlayCircleOutlineIcon>
                 }
             </div>
-            <div className={classes.song_icon} onClick={()=>handleAdd(song)}>
+            <div className={classes.song_icon}>
                 <i>
                 <LibraryAddOutlined></LibraryAddOutlined>
                 </i>

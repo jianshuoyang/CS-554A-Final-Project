@@ -64,7 +64,6 @@ const TopNav = (props)=>{
                 <NavDropdown title={userEmail} id="collasible-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Account</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="/likedpage">Favorite List</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleLogout} >Log out</NavDropdown.Item>
                 </NavDropdown>

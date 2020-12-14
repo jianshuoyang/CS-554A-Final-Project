@@ -37,8 +37,6 @@ router.post('/login', async (req, res) => {
 
     let user = await getUserByEmail(req.body.email);
     let flag = await bcrypt.compare(req.body.password, user.password);
-    console.log(user)
-    console.log(user._id)
     if (flag) {
       // req.session.loginOrNot = true;
       // req.session.userEmail = user.email;
@@ -51,33 +49,7 @@ router.post('/login', async (req, res) => {
     // console.log("error: " + e);
 		res.status(500).json(e);
   }
-});
 
-//JP parts
-router.post('/addsong', async(req, res) => {
-  try {
-    let newSong = {
-      title: req.body.title,
-      artist: req.body.artist,
-      artistId: req.body.artistId,
-      albumName: req.body.albumName,
-      albumId: req.body.albumId,
-      playUrl: req.body.playUrl,
-      songId: req.body.songId
-    };
-    const user = await getUserByEmail(req.body.userEmail);
-
-    //add song to song list
-    const songId = await data.songs.addSong(newSong.title, newSong.artist, newSong.artistId, newSong.albumName, newSong.albumId,newSong.playUrl,newSong.songId);
-    //add song to user favorite song list
-    await data.users.addSongToUser(user._id.toString(), songId.toString());
-
-    res.status(200).json(newSong)
-  } catch(e) {
-    console.log({error: e})
-  }
-});
-
-
+})
 
 module.exports = router;
