@@ -10,6 +10,9 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import Pagination from '@material-ui/lab/Pagination'
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import addSong from "../actions/addSong";
+const axios = require('axios').default;
+
 const columns = [
     { id: 'name', label: 'Name', align: 'center', minWidth: 100 },
     { id: 'singer', label: 'Singer Name', align: 'center', minWidth: 100 },
@@ -27,6 +30,23 @@ const columns = [
     }
 
 ];
+
+// new part
+// try {
+//     let songObj = {
+//         title: "song2",
+//         artist: "singer2",
+//         artistId: "singerID2",
+//         albumName: "albumName2",
+//         albumId: "albumId2"
+//     }
+//     const addSongRes = addSong(songObj);
+//     console.log(addSongRes)
+// } catch(e) {
+//     console.log({error:e})
+// }
+
+
 function createData(name, singer, albumName) {
     return { name, singer, albumName, remove:" remove"};
 }
@@ -115,15 +135,15 @@ const LikedPage = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/*<TablePagination*/}
-            {/*    rowsPerPageOptions={[10, 25, 100]}*/}
-            {/*    component="div"*/}
-            {/*    count={rows.length}*/}
-            {/*    rowsPerPage={rowsPerPage}*/}
-            {/*    page={page}*/}
-            {/*    onChangePage={handleChangePage}*/}
-            {/*    onChangeRowsPerPage={handleChangeRowsPerPage}*/}
-            {/*/>*/}
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
         </Paper>
     );
 
