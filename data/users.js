@@ -135,16 +135,17 @@ async function addSongToUser(id, songId) {
 
   const objId = ObjectId.createFromHexString(id);
   const songObj = await songsUtil.getSongById(songId);
-  let res = {
+  let newSong = {
     id: songObj._id,
-    name: songObj.name,
-    singerName: songObj.singerName,
+    title: songObj.title,
+    artist: songObj.artist,
+    artistId: songObj.artistId,
     albumName: songObj.albumName,
+    albumId: songObj.albumId,
     comments: songObj.comments
-  }
-
+  };
   const userCollection = await users();
-  await userCollection.updateOne({_id: objId}, {$addToSet: {likedSongs: res}});
+  await userCollection.updateOne({_id: objId}, {$addToSet: {likedSongs: newSong}});
 }
 
 async function removeSongFromUser(id, songId) {
