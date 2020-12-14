@@ -14,6 +14,7 @@ import Songplay from './components/SongPlay'
 import TopNav from './components/Nav/TopNav'
 import { AppContext } from "./libs/contextLib";
 import Search from './components/Search';
+import LikedPage from './components/LikedPage';
 
 
 function App() {
@@ -48,56 +49,38 @@ function App() {
   }
   
   return (
-    <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-
+    // !isAuthenticating && (
       <Router>
         <div>
         <TopNav></TopNav>
         <Songplay></Songplay>
 
 
-        {isAuthenticated ? (
-            <div>
-              {/* Yichao's routes */}
-              <Route exact path="/" component={Home} />
-              <Route exact path="/userprofile" component={UserProfile} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
+          <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+            {/* Yichao's routes */}
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/userprofile" component={UserProfile} />
 
-              {/* Rupu's routes */}
-              <Route exact path='/categories' component={GenresList} />
-              <Route exact path='/:categories/playList' component={PlayList} />
-              <Route exact path='/:type/songsList/:id' component={SongList} />
-              <Route exact path='/albumList/:id' component={AlbumList} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            {/* Weijie's routes */}
+            <Route exact path="/likedpage" component={LikedPage} />
 
-              {/* Donglin's routes */}
-              <Route exact path='/search' component={Search} />
-            </div>
-        ) 
-        : 
-        (    
-            <div>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path='/search' component={Login} />
-
-              <Route exact path='/categories' component={Home} />
-              <Route exact path='/:categories/playList' component={Home} />
-              <Route exact path='/:type/songsList/:id' component={Home} />
-              <Route exact path='/albumList/:id' component={Home} />
-
-            </div>
-        )}
-
+            {/* Rupu's routes */}
+            <Route exact path='/' component={GenresList} />
+            <Route exact path='/:categories/playList' component={PlayList} />
+            <Route exact path='/:type/songsList/:id' component={SongList} />
+            <Route exact path='/albumList/:id' component={AlbumList} />
+            {/* Donglin's routes */}
+            <Route exact path='/search' component={Search} />
+          </AppContext.Provider>
 
           
 
 
         </div>
       </Router>
-    </AppContext.Provider>
-
+    // )
   );
 }
 

@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 export default function Login() {
-  const {isAuthenticated ,userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated } = useAppContext();
 
   const [state , setState] = useState({
     
@@ -68,8 +68,6 @@ export default function Login() {
   if (userEmail) {
     userHasAuthenticated(true);
     window.sessionStorage.setItem("userEmail", userEmail);
-    window.location.reload(true);
-
     // localStorage.setItem('test', 1);
 
   }
@@ -93,18 +91,18 @@ export default function Login() {
   }
   return (
     <div>
-      {isAuthenticated ? (
+      {userEmail ? (
         <div>
-            <Redirect to="/categories" />
-            {/* <p style={{fontSize:'30px'}}>
+            {/* <Redirect to="/" /> */}
+            <p style={{fontSize:'30px'}}>
               Have fun! {window.sessionStorage.getItem("userEmail")}<br/>
               
               <a
                   href= "http://localhost:3000/"
               >
-                  Back to home
+                  Back to categories
               </a>
-            </p> */}
+            </p>
         </div>
       ) : (
             <div class="loginbox">

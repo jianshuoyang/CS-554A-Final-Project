@@ -5,19 +5,25 @@ const {ObjectId} = require('mongodb');
 const commentsUtil = require('./comments');
 
 // addSong('Hello', 'adele', 'whatever');
-async function addSong(name, singerName, albumName) {
-  if (!name || typeof name !== 'string') throw `invalid song name`;
-  if (!singerName || typeof singerName !== 'string') throw `invalid singer name`;
+async function addSong(title, artist, artistId, albumName, albumId,playUrl,songId) {
+  if (!title || typeof title !== 'string') throw `invalid song name`;
+  if (!artist || typeof artist !== 'string') throw `invalid singer name`;
   if (!albumName || typeof albumName !== 'string') throw 'invalid album name';
+  //if (!playUrl || typeof playUrl !== 'string') throw 'invalid play Url';
+  if (!songId || typeof songId !== 'string') throw 'invalid songId';
 
   const songCollections = await songs();
 
   let newSong = {
-    name: name,
-    singerName: singerName,
+    title: title,
+    artist: artist,
+    artistId: artistId,
     albumName: albumName,
+    albumId: albumId,
+    playUrl: playUrl,
+    songId: songId,
     comments: []
-  }
+  };
 
   const insertInfo = await songCollections.insertOne(newSong);
   return insertInfo.insertedId;
