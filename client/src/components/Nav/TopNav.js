@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         background: "#333",
         position: "fixed",
         top: "0",
-        width: "100%"
+        width: "100%",
+        zIndex:'200px'
     },
 });
 
@@ -26,7 +27,6 @@ const TopNav = (props)=>{
     useEffect(() => {
       onLoadAgain();
     }, [e]);
-    
     async function onLoadAgain() {
       if (userEmail) {
         userHasAuthenticated(true);
@@ -34,12 +34,10 @@ const TopNav = (props)=>{
         console.log("user email is empty");
         userHasAuthenticated(false);
       }
-  
     }
     if (window.location.href.includes("access_token")) {
       return (
         <UserProfile />
-          
       );
     }
     function handleLogout() {
@@ -47,11 +45,11 @@ const TopNav = (props)=>{
         userHasAuthenticated(false);
         window.location.reload(false);
       }
-    const url = 'https://accounts.spotify.com/authorize?show_dialog=true&client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback';    
+    const url = 'https://accounts.spotify.com/authorize?show_dialog=true&client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback';
     if(isAuthenticated){
         return(
             <AppBar position="static">
-            <Navbar className = "topnav" collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar className = {classes.topnave} collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="/">Music Website</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -113,17 +111,17 @@ const TopNav = (props)=>{
     //         </button>
     //         <p class = "login" style={{fontSize:'30px'}}>  To logout you might need double click</p>
     //         <p class = "login" style={{fontSize:'30px'}}> <a href= "http://localhost:3000/register"> Register </a></p>
-    //       </div>  
+    //       </div>
     //       ) : (
     //     <div>
     //         <h1 className="App-title"> Welcome To Our Music Website </h1>
-    //         <p class = "login" style={{fontSize:'30px'}}> 
+    //         <p class = "login" style={{fontSize:'30px'}}>
     //         <a href= "http://localhost:3000/" > Categories</a> </p>
 
     //         <p class = "login" style={{fontSize:'30px'}}>
-    //         <a  href= "http://localhost:3000/login"> Login </a></p> 
+    //         <a  href= "http://localhost:3000/login"> Login </a></p>
 
-    //         <p class = "login" style={{fontSize:'30px'}}> 
+    //         <p class = "login" style={{fontSize:'30px'}}>
     //         <a href= "http://localhost:3000/register"> Register</a></p>
 
     //         <p class = "login" style={{fontSize:'30px'}}>

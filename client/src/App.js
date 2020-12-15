@@ -15,6 +15,7 @@ import TopNav from './components/Nav/TopNav'
 import { AppContext } from "./libs/contextLib";
 import Search from './components/Search';
 import LikedPage from './components/LikedPage';
+import NewRelease from './components/NewRelease';
 
 
 function App() {
@@ -30,7 +31,6 @@ function App() {
   useEffect(() => {
     onLoadAgain();
   }, [e]);
-  
   async function onLoadAgain() {
     if (userEmail) {
       userHasAuthenticated(true);
@@ -44,18 +44,14 @@ function App() {
   if (window.location.href.includes("access_token")) {
     return (
       <UserProfile />
-        
     );
   }
-  
   return (
     // !isAuthenticating && (
       <Router>
         <div>
         <TopNav></TopNav>
         <Songplay></Songplay>
-
-
           <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
             {/* Yichao's routes */}
             <Route exact path="/home" component={Home} />
@@ -67,15 +63,16 @@ function App() {
             <Route exact path="/likedpage" component={LikedPage} />
 
             {/* Rupu's routes */}
-            <Route exact path='/' component={GenresList} />
+            <Route exact path='/allCategories' component={GenresList} />
             <Route exact path='/:categories/playList' component={PlayList} />
             <Route exact path='/:type/songsList/:id' component={SongList} />
             <Route exact path='/albumList/:id' component={AlbumList} />
+            <Route exact path='/newRelease' component={NewRelease} />
             {/* Donglin's routes */}
             <Route exact path='/search' component={Search} />
           </AppContext.Provider>
 
-          
+
 
 
         </div>

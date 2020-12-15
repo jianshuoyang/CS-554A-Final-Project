@@ -82,7 +82,6 @@ const SongPlay = (props)=>{
     const allState = useSelector((state) => state);
     const songsPlay = allState.songsPlay;
     const song = allState.songsPlay.song;
-    console.log(song);
     const songList = allState.songsPlay.songList;
     const track = allState.songsPlay.track;
     const [open, setOpen] = useState(undefined);

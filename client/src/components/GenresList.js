@@ -46,7 +46,10 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
-	}
+    },
+    list_name:{
+        textAlign: 'center'
+    }
 });
 
 const GenresList = (props) =>{
@@ -149,7 +152,7 @@ const GenresList = (props) =>{
                         <div className='category-image'>
                             <img alt="category" src={genre.icons ? genre.icons[0].url : genre.images[0].url} width='100%'/>
 
-                             <p className='category-name'>{genre.name}</p>
+                             <p className={classes.list_name}>{genre.name}</p>
 
                         </div>
                         </Link>

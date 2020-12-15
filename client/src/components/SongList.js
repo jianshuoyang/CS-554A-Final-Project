@@ -117,6 +117,10 @@ const useStyles = makeStyles({
     },
     linkhover :{
         textDecoration: 'underline'
+    },
+    p:{
+        marginTop:'revert',
+        marginBottom:'revert',
     }
 
 });
@@ -284,19 +288,19 @@ const SongList = (props)=>{
 
             </div>
             <div className={classes.song_title_header}>
-                <p>Title</p>
+                <p className={classes.p}>Title</p>
             </div>
             <div className={classes.song_artist_header}>
-                <p>Artist</p>
+                <p className={classes.p}>Artist</p>
             </div>
             <div className={classes.song_album_header}>
-                <p>Album</p>
+                <p className={classes.p}>Album</p>
             </div>
             <div className={classes.song_added_header}>
-                <p>Date</p>
+                <p className={classes.p}>Date</p>
             </div>
             <div className={classes.song_length_header}>
-            <p>Duration</p>
+            <p className={classes.p}>Duration</p>
             </div>
             </div>
             {card}

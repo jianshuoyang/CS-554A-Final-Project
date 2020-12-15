@@ -91,6 +91,10 @@ const useStyles = makeStyles({
     },
     linkhover :{
         textDecoration: 'underline'
+    },
+    p:{
+        marginTop:'revert',
+        marginBottom:'revert',
     }
 
 });
@@ -174,30 +178,30 @@ const Song = (props)=>{
                 </i>
             </div>
             <div className={classes.song_title}>
-                <p>{song.track? song.track.name : song.name}</p>
+                <p className={classes.p}>{song.track? song.track.name : song.name}</p>
             </div>
 
             <Link to={track?`/albumList/${track.artists[0].id}`:`/albumList/${song.artists[0].id}`} className={classes.link}>
             <div className={classes.song_artist}>
-                <p>{song.track?track.artists[0].name:song.artists[0].name}</p>
+                <p  className={classes.p}> {song.track?track.artists[0].name:song.artists[0].name}</p>
             </div>
             </Link>
             {song.track.album?
             <Link to={`/albums/songsList/${song.track.album.id}`} className={classes.link}>
             <div className={classes.song_album}>
-                <p>{song.track?song.track.album.name:'-'}</p>
+                <p className={classes.p}>{song.track?song.track.album.name:'-'}</p>
             </div>
             </Link>:
             <div className={classes.song_album}>
-                <p>{song.album?song.album.name:song.name?song.name:'-'}</p>
+                <p className={classes.p}>{song.album?song.album.name:song.name?song.name:'-'}</p>
             </div>}
 
             <div className={classes.song_added}>
-                <p>{song.track? moment(song.added_at).format("YYYY-MM-DD") : song.album?song.album.release_date:'-'}</p>
+                <p className={classes.p}>{song.track? moment(song.added_at).format("YYYY-MM-DD") : song.album?song.album.release_date:'-'}</p>
             </div>
 
             <div className={classes.song_length}>
-                <p>{song.track?timeFormat(song.track.duration_ms):timeFormat(song.duration_ms)}</p>
+                <p className={classes.p}>{song.track?timeFormat(song.track.duration_ms):timeFormat(song.duration_ms)}</p>
             </div>
 
         </li>

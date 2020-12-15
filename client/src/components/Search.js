@@ -110,17 +110,16 @@ const Search = (props) =>{
         if(e.target.value){
             getData(`https://api.spotify.com/v1/search?query=${e.target.value}&offset=0&limit=6&type=album%2Cartist%2Cplaylist`);
         }
-    };    
+    };
     const searchValue = async (value) => {
 		setSearchTerm(value);
 	};
     const buildCard = (genre)  => {
-        console.log(genre);
         return(
             <Grid item xs={12} sm={4} md={3} lg={2} xl={2}  key={genre.id}>
                 <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
-                    <Link to={`/albumList/${genre.id}`}>
+                    <Link to={genre.type==='artist'?`/albumList/${genre.id}`:genre.type==='album'?`/albums/songsList/${genre.id}`:`/playlists/songsList/${genre.id}`}>
                     <div className='category-image'>
                         <img alt="category" src={genre.images && genre.images.length === 0 ? noImage : genre.images[0].url} width='100%'/>
                          <p className='category-name'>{genre.name}</p>
@@ -164,7 +163,6 @@ const Search = (props) =>{
                             e.preventDefault();
                         }}
                         name='formName'
-                       
                     >
                         <input className="form__field" autoComplete='off' type='text' name='searchTerm' placeholder="Search" onChange={handleChange} />
                         <label for="name" class="form__label">Search</label>

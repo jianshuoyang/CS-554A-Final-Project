@@ -77,6 +77,9 @@ const useStyles = makeStyles({
     },
     empty:{
         width: '250px',
+    },
+    list_name:{
+        textAlign: 'center'
     }
 });
 function TabPanel(props) {
@@ -155,6 +158,7 @@ const AlbumList = (props) => {
                     if(error){
                         setError(true);
                     } else {
+                        console.log(type);
                         if(type === 'artist'){
                             setSingerName(body.name);
                             setId(body.id);
@@ -231,7 +235,7 @@ const AlbumList = (props) => {
 				<div className='category-image'>
 					<img alt="category" src={albm.icons ? albm.icons[0].url : albm.images[1].url} width='100%'/>
 
-					 <p className='category-name'>{albm.name}</p>
+					 <p className={classes.list_name}>{albm.name}</p>
 
 				</div>
 				</Link>

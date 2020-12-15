@@ -52,9 +52,9 @@ const useStyles = makeStyles({
     }
 });
 
-const PlayList=(props)=>{
+const NewRelease=(props)=>{
     const classes = useStyles();
-    const [ playList, setPlayList ] = useState(undefined);
+    const [ newAlbumList, setNewAlbumList ] = useState(undefined);
     const [page, setPage] = useState(1);
     const [ total, setTotal] =  useState(undefined);
     const [isLast, setLast] = useState(false);
@@ -91,9 +91,10 @@ const PlayList=(props)=>{
                         setError(true);
                         setLoading(false);
                     }else{
-                        if(type === 'playlists'){
-                            setPlayList(body.playlists.items);
-                            setTotal(Math.ceil(body.playlists.total / 24))
+                        if(type === 'albumlists'){
+                            console.log(body);
+                            setNewAlbumList(body.albums.items);
+                            setTotal(Math.ceil(body.albums.total / 24))
                         }
                         setLoading(false);
                     }
@@ -106,7 +107,7 @@ const PlayList=(props)=>{
         async function fetchData () {
             try{
 
-                await getData(`https://api.spotify.com/v1/browse/categories/${props.match.params.categories}/playlists?limit=24&&offset=${page*24-24}`,'playlists');
+                await getData(`https://api.spotify.com/v1/browse/new-releases?limit=24&&offset=${page*24-24}`,'albumlists');
                 if (page === 1) {
 					setFirst(true);
 					setLast(false);
@@ -142,16 +143,16 @@ const PlayList=(props)=>{
         }
     }
 
-    const buildCard = (playlist)  => {
+    const buildCard = (list)  => {
         return(
-            <Grid item xs={12} sm={4} md={3} lg={2} xl={2}  key={playlist.id}>
+            <Grid item xs={12} sm={4} md={3} lg={2} xl={2}  key={list.id}>
                 <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
-                    <Link to={`/playlists/songsList/${playlist.id}`}>
+                    <Link to={`/albums/songsList/${list.id}`}>
                     <div className='category-image'>
-                        <img alt="category" src={playlist.icons ? playlist.icons[0].url : playlist.images[0].url} width='100%'/>
+                        <img alt="category" src={list.icons ? list.icons[0].url : list.images[0].url} width='100%'/>
 
-                         <p className={classes.list_name}>{playlist.name}</p>
+                         <p className={classes.list_name}>{list.name}</p>
 
                     </div>
                     </Link>
@@ -160,7 +161,7 @@ const PlayList=(props)=>{
             </Grid>
         );
     };
-    let card = playList && playList.map((playlist) => {
+    let card = newAlbumList && newAlbumList.map((playlist) => {
         return buildCard(playlist);
     });
 
@@ -181,7 +182,7 @@ const PlayList=(props)=>{
         return(
             <div>
                 <AppBar position="static" className={classes.appbar}>
-                    <Tab  label={`All PlayLists from ${props.match.params.categories}`} />
+                    <Tab  label="New Release Albums" />
                     </AppBar>
                 <Grid container className={classes.grid} spacing={2}>
                         {card}
@@ -196,4 +197,4 @@ const PlayList=(props)=>{
         );
     }
 }
-export default withRouter(PlayList);
+export default withRouter(NewRelease);
