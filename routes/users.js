@@ -78,6 +78,27 @@ router.post('/addsong', async(req, res) => {
   }
 });
 
+router.post('/favoriteSongs', async(req,res) => {
+  try {
+    const user = await getUserByEmail(req.body.userEmail);
+    res.status(200).json(user.likedSongs)
+  }catch(e) {
+    console.log({error: e})
+  }
+});
+
+router.post('/removeSong', async(req, res) => {
+  try {
+    const user = await getUserByEmail(req.body.userEmail);
+    const userId = user._id.toString();
+    await data.users.removeSongFromUser(userId, req.body.songId.toString());
+    console.log("done")
+    res.status(200);
+  } catch (e) {
+    console.log({error: e})
+  }
+});
+
 
 
 module.exports = router;
