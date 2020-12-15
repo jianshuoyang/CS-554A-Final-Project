@@ -10,12 +10,15 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import Pagination from '@material-ui/lab/Pagination'
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import addSong from "../actions/addSong";
+import {Link} from '@material-ui/core'
+import playAction from '../actions/playAction'
+import removeSong from "../actions/removeSong";
+import {useDispatch} from 'react-redux';
 const axios = require('axios').default;
 
 const columns = [
-    { id: 'name', label: 'Name', align: 'center', minWidth: 100 },
-    { id: 'singer', label: 'Singer Name', align: 'center', minWidth: 100 },
+    { id: 'title', label: 'Title', align: 'center', minWidth: 100 },
+    { id: 'artist', label: 'Artist', align: 'center', minWidth: 100 },
     {
         id: 'albumName',
         label: 'Album Name',
@@ -31,83 +34,74 @@ const columns = [
 
 ];
 
-// new part
-// try {
-//     let songObj = {
-//         title: "song2",
-//         artist: "singer2",
-//         artistId: "singerID2",
-//         albumName: "albumName2",
-//         albumId: "albumId2"
-//     }
-//     const addSongRes = addSong(songObj);
-//     console.log(addSongRes)
-// } catch(e) {
-//     console.log({error:e})
-// }
 
-// 拿到 了数据。写成这个格式get()==>obj
-// let Nsong = {
-//     track: {
-//         album:{
-//             id: obj.albumId,
-//             name: obj.albumName,
-//         },
-//         artists: [
-//             {
-//                 id:obj.artistId,
-//                 name: obj.artistName
-//             }
-//         ],
-//         name: obj.title,
-//         preview_url: obj.playUrl,
-//         id:obj.songId
-//     }
-// },
-// import playAction from '../actions/playAction'
-// import {useDispatch} from 'react-redux';
-// const dispatch = useDispatch();
 // if(Nsong.track.preview_url){
 //     dispatch(playAction.playSong(song));
 // }else{
 //     dispatch(playAction.toSong(song))
 // }
 
-function createData(name, singer, albumName) {
-    return { name, singer, albumName, remove:" remove"};
-}
 
-const rows = [
-    createData('India', 'IN', "IN"),
-    createData('China', 'CN', 'CN'),
-    createData('Italy', 'IT', 'IT'),
-    createData('United States', 'US', 'US'),
-    createData('Canada', 'CA', 'CA'),
-    createData('Australia', 'AU', 'AU'),
-    createData('Germany', 'DE', 'DE'),
-    createData('Ireland', 'IE', 'IE'),
-    createData('Mexico', 'MX', 'MX'),
-    createData('Japan', 'JP', 'JP'),
-    createData('France', 'FR', 'FR'),
-    createData('United Kingdom', 'GB', 'GB'),
-    createData('Russia', 'RU', 'RU'),
-    createData('Nigeria', 'NG', 'NG'),
-    createData('Brazil', 'BR', 'BR'),
-];
 const useStyles = makeStyles({
     root: {
         width: '100%',
     },
     container: {
-        maxHeight: 440,
+        maxHeight: 700,
     },
 });
 const LikedPage = () => {
-    // const mongoCollection = require('../../../config/mongoCollections');
-    // const user = mongoCollection.users;
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [favoriteSongList, SetFavoriteSongList] = useState(undefined);
+    const [dataSize, SetDatSie] = useState(0);
+    const [loading, SetLoading] = useState(true);
+    const [error, SetError] = useState(false);
+
+    const dispatch = useDispatch();
+
+    async function getFavoriteSongs() {
+        try {
+            const userInfo = {
+                userEmail: window.sessionStorage.userEmail
+            };
+            const favoriteSongs = await axios.post('http://localhost:5000/users/favoriteSongs', userInfo);
+            let newFavoriteSongs = [];
+            if(favoriteSongs.data) {
+                favoriteSongs.data.map(song => {
+                    let newSongFormat = {
+                        storedId: song.id,
+                        track: {
+                            album:{
+                                id: song.albumId,
+                                name: song.albumName,
+                            },
+                            artists: [
+                                {
+                                    id: song.artistId,
+                                    name: song.artist
+                                }
+                                ],
+                            name: song.title,
+                            preview_url: song.playUrl,
+                            id: song.songId
+                        },
+                    };
+                    newFavoriteSongs.push(newSongFormat)
+                })
+            }
+            await SetFavoriteSongList(newFavoriteSongs);
+            await SetDatSie(newFavoriteSongs.length);
+            await SetLoading(false)
+        } catch(e) {
+            SetError(true);
+            console.log({error: e})
+        }
+    }
+    useEffect(()=> {
+        getFavoriteSongs();
+    }, [dataSize, page]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -118,63 +112,82 @@ const LikedPage = () => {
         setPage(0);
     };
 
-    const handleRemoveSong = () => {
-        alert("remove")
+    const handleRemoveSong = (songId) => {
+        try {
+            const result =  removeSong(songId);
+            SetDatSie(dataSize - 1);
+            if(result) {
+                alert("Remove the song successfully")
+            }
+        } catch(e) {
+            console.log({error:e})
+        }
     };
 
-    return (
-        <Paper className={classes.root}>
-            <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table" >
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                            return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                                    <TableCell align='center'>
-                                        {row.name}
-                                    </TableCell >
-                                    <TableCell align='center'>
-                                        {row.singer}
+    if(loading) {
+        return (
+            <div>Loading....</div>
+        )
+    } else if(error) {
+        return (
+            <div>Error.....</div>
+        )
+    } else {
+        return (
+            <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table" >
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                    >
+                                        {column.label}
                                     </TableCell>
-                                    <TableCell align='center'>
-                                        {row.albumName}
-                                    </TableCell>
-                                    <TableCell align='center' onClick={handleRemoveSong}>
-                                        <DeleteOutlinedIcon/>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-        </Paper>
-    );
-
-
-
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {favoriteSongList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((favoriteSong) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={favoriteSong.storedId}>
+                                        <TableCell align='center'>
+                                            {favoriteSong.track? favoriteSong.track.name: '-'}
+                                        </TableCell >
+                                        <TableCell align='center'>
+                                            <Link href={favoriteSong.track?`/albumList/${favoriteSong.track.artists[0].id}`:""} >
+                                                {favoriteSong.track?favoriteSong.track.artists[0].name:'-'}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <Link href={favoriteSong.track?`/albums/songsList/${favoriteSong.track.album.id}`:""}>
+                                                {favoriteSong.track?favoriteSong.track.album.name:'-'}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell align='center' onClick={()=>{handleRemoveSong(favoriteSong.storedId)}}>
+                                            <DeleteOutlinedIcon/>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={dataSize}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
+        );
+    }
 };
 
 export default LikedPage
