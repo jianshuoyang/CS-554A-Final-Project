@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import Login from './components/Login/Login';
-import Register from './components/Register/Register'
+import Register from './components/Register/Register';
+import My404Component from './components/My404Component';
+
 
 import AlbumList from './components/AlbumList'
 import GenresList from './components/GenresList'
@@ -49,38 +51,77 @@ function App() {
   }
   
   return (
-    // !isAuthenticating && (
-      <Router>
-        <div>
-        <TopNav></TopNav>
-        <Songplay></Songplay>
 
 
-          <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-            {/* Yichao's routes */}
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/userprofile" component={UserProfile} />
 
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            {/* Weijie's routes */}
-            <Route exact path="/likedpage" component={LikedPage} />
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
 
-            {/* Rupu's routes */}
-            <Route exact path='/' component={GenresList} />
-            <Route exact path='/:categories/playList' component={PlayList} />
-            <Route exact path='/:type/songsList/:id' component={SongList} />
-            <Route exact path='/albumList/:id' component={AlbumList} />
-            {/* Donglin's routes */}
-            <Route exact path='/search' component={Search} />
-          </AppContext.Provider>
-
-          
+          <Router>
+            <div>
+            <TopNav></TopNav>
+            <Songplay></Songplay>
 
 
-        </div>
-      </Router>
-    // )
+            {isAuthenticated ? (
+                <div>
+                  <Switch>
+                    {/* Yichao's routes */}
+
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/userprofile" component={UserProfile} />
+
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    {/* Weijie's routes */}
+                    <Route exact path="/likedpage" component={LikedPage} />
+
+                    {/* Rupu's routes */}
+                    <Route exact path='/categories' component={GenresList} />
+                    <Route exact path='/:categories/playList' component={PlayList} />
+                    <Route exact path='/:type/songsList/:id' component={SongList} />
+                    <Route exact path='/albumList/:id' component={AlbumList} />
+                    {/* Donglin's routes */}
+                    <Route exact path='/search' component={Search} />
+
+                    <Route component={My404Component}/>
+
+                  </Switch>
+                  
+
+
+                </div>
+            ) 
+            : 
+            (    
+                <div>
+                  <Switch>
+
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path='/search' component={Login} />
+
+                    <Route exact path='/categories' component={Home} />
+                    <Route exact path='/:categories/playList' component={Home} />
+                    <Route exact path='/:type/songsList/:id' component={Home} />
+                    <Route exact path='/albumList/:id' component={Home} />
+
+                    <Route exact path="/likedpage" component={Home} />
+
+                    <Route component={My404Component}/>
+
+                  </Switch>
+
+                </div>
+            )}
+
+
+              
+
+
+            </div>
+          </Router>
+        </AppContext.Provider>
   );
 }
 
