@@ -29,6 +29,18 @@ async function addSong(title, artist, artistId, albumName, albumId,playUrl,songI
   return insertInfo.insertedId;
 }
 
+async function deleteASong(id) {
+  if (!id || typeof id !== 'string') throw `invalid song id input`;
+  console.log(id)
+  const objId = ObjectId.createFromHexString(id);
+  const userCollection = await songs();
+  const deletionInfo = await userCollection.removeOne({_id: objId});
+  if (deletionInfo.deletedCount === 0) {
+    throw `Could not delete the song with id of ${id}`;
+  }
+}
+
+
 async function getSongById(id) {
   if (!id || typeof id !== 'string') throw `invalid song id`;
 
@@ -74,6 +86,7 @@ async function removeCommentFromSong(id, commentId) {
 
 module.exports = {
   addSong,
+  deleteASong,
   getSongById,
   addCommentToSong,
   removeCommentFromSong
