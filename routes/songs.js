@@ -10,4 +10,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/removeASong', async(req, res) => {
+  console.log(req.body)
+  try {
+    const songId = req.body.songId.toString();
+    await data.songs.deleteASong(songId);
+    console.log("done1");
+    res.status(200);
+  } catch (e) {
+    console.log({error: e})
+  }
+});
+
+
 module.exports = router;
