@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useAppContext } from "../../libs/contextLib";
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
+import video from '../../videos/wap.mp4'
+import classes from '../..//BackgroundVideo.module.css';
 
 
 import "./Login.css";
@@ -76,21 +78,7 @@ export default function Login() {
   // const s = window.sessionStorage.getItem("userEmail")
   // console.log("session : " + s);
 
-  if (loginError) {
 
-    return(
-      <p style={{fontSize:'30px'}}>
-          Error! <br/>
-          Email or password is wrong <br/>
-          <a
-              href= "http://localhost:3000/login"
-          >
-              Back to Login
-          </a>
-      </p>
-  );
-
-  }
   return (
     <div>
       {isAuthenticated ? (
@@ -107,51 +95,71 @@ export default function Login() {
             </p> */}
         </div>
       ) : (
-            <div class="loginbox">
-            <form>
-              <h1 class="loginHere">Login Here</h1>
+        <div className={classes.Container}>
 
+              <video autoPlay="autoplay" loop="loop" muted className={classes.Video} >
+                  <source src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+						  </video>
 
-              <div className="form-group text-left">
-              <label htmlFor="exampleInputEmail1">Email</label>
-              <input type="email" 
-                    className="form-control" 
-                    id="email" 
-                    aria-describedby="emailHelp" 
-                    placeholder="Email" 
-                    value={state.email}
-                    onChange={handleChange}
-              />
-              
+              <div className={classes.Content}>
+                <div className={classes.SubContent}>								
+                  <form>
+                    
+                    <h1 class="loginHere">Login Here</h1>
+                    
+                    {loginError? (
+                        <p class="error">Email or password is wrong</p>
+                    ) : (
+                      <p></p>
+
+                    )}
+
+                    <div className="form-group text-left">
+                    <label htmlFor="exampleInputEmail1">Email</label>
+                    <input type="email" 
+                          className="form-control" 
+                          id="email" 
+                          aria-describedby="emailHelp" 
+                          placeholder="Email" 
+                          value={state.email}
+                          onChange={handleChange}
+                    />
+                    
+                    </div>
+                    <div className="form-group text-left">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input type="password" 
+                            className="form-control" 
+                            id="password" 
+                            placeholder="Password"
+                            value={state.password}
+                            onChange={handleChange} 
+                        />
+                    </div>
+                    
+                    <button
+                        class="login" 
+                        type="submit" 
+                        className="login"
+                        onClick={handleSubmitClick}
+                    >
+                        Login
+                    </button>
+                  </form>
+                  <a href="http://localhost:3000/register" class="yet">Haven't created an account yet?</a>
+
+                </div>
+
               </div>
-              <div className="form-group text-left">
-                  <label htmlFor="exampleInputPassword1">Password</label>
-                  <input type="password" 
-                      className="form-control" 
-                      id="password" 
-                      placeholder="Password"
-                      value={state.password}
-                      onChange={handleChange} 
-                  />
-              </div>
-              
-              <button
-                  class="login" 
-                  type="submit" 
-                  className="login"
-                  onClick={handleSubmitClick}
-              >
-                  Login
-              </button>
-            </form>
 
-            <a href="http://localhost:3000/register">Haven't created an account yet?</a>
-
-
-          {/* <p> email : {state.email}</p>
-          <p> password : {state.password}</p> */}
 
         </div>
+
+
+
+
+          
       )}
     </div>
   );

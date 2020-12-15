@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 // import user from '../../data/users';
 import "./Register.css";
 import axios from 'axios'
+import { Redirect } from "react-router-dom";
+import video from '../../videos/wap.mp4'
+
+import classes from '../..//BackgroundVideo.module.css';
 
 
 function RegistrationForm(props) {
@@ -88,21 +92,21 @@ function RegistrationForm(props) {
 
     
 
-    if (registerError) {
+    // if (registerError) {
 
-        return(
-            <p style={{fontSize:'30px'}}>
-                Error! <br/>
-                Email might be already used <br/>
-                Each fiels cannot be null<br/>
-                <a
-                    href= "http://localhost:3000/register"
-                >
-                    Back to Register
-                </a>
-            </p>
-        );
-    }
+    //     return(
+    //         <p style={{fontSize:'30px'}}>
+    //             Error! <br/>
+    //             Email might be already used <br/>
+    //             Each fiels cannot be null<br/>
+    //             <a
+    //                 href= "http://localhost:3000/register"
+    //             >
+    //                 Back to Register
+    //             </a>
+    //         </p>
+    //     );
+    // }
 
     
 
@@ -110,7 +114,9 @@ function RegistrationForm(props) {
         <div>
         {userEmail ? (
             <div>
-                <p>Register successful</p>
+                <Redirect to="/login" />
+
+                {/* <p>Register successful</p>
                 <p style={{fontSize:'30px'}}>
 
                     <a
@@ -118,90 +124,105 @@ function RegistrationForm(props) {
                     >
                         Login now
                     </a>
-                </p>
+                </p> */}
             </div>
         ) : (
-            <div id="register-box">
-                <form>
+            <div className={classes.Container}>
+                <video autoPlay="autoplay" loop="loop" muted className={classes.Video} >
+                  <source src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+				</video>
 
-                    <h1 class="registerHere">Register Here</h1>
+                <div className={classes.Content}>
+                    <div className={classes.SubContentRegister}>
+                        <form>
 
-                    <div className="form-group text-left">
-                        <label>First Name</label>
-                        <input type="text" 
-                            className="form-control" 
-                            id="firstname" 
-                            placeholder="First Name"
-                            value={state.firstname}
-                            onChange={handleChange} 
-                        />
-                    </div>
+                            <h1 class="registerHere">Register Here</h1>
 
-                    <div className="form-group text-left">
-                        <label>Last Name</label>
-                        <input type="text" 
-                            className="form-control" 
-                            id="lastname" 
-                            placeholder="Last Name"
-                            value={state.lastname}
-                            onChange={handleChange} 
-                        />
-                    </div>
+                            {registerError? (
+                                <p class="error">Email is already used or one of fileds is empty</p>
+                            ) : (
+                                <p></p>
 
-                    <div className="form-group text-left">
-                        <label>Gender</label>
-                        <input type="text" 
-                            className="form-control" 
-                            id="gender" 
-                            placeholder="Gender"
-                            value={state.gender}
-                            onChange={handleChange} 
-                        />
-                    </div>
+                            )}
 
-                    <div className="form-group text-left">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                        <input type="email" 
-                            className="form-control" 
-                            id="email" 
-                            aria-describedby="emailHelp" 
-                            placeholder="Email" 
-                            value={state.email}
-                            onChange={handleChange}
-                        />
-                    
-                    </div>
-                    <div className="form-group text-left">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input type="password" 
-                            className="form-control" 
-                            id="password" 
-                            placeholder="Password"
-                            value={state.password}
-                            onChange={handleChange} 
-                        />
-                    </div>
-                    <div className="form-group text-left">
-                        <label htmlFor="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" 
-                            className="form-control" 
-                            id="confirmPassword" 
-                            placeholder="Confirm Password"
-                            value={state.confirmPassword}
-                            onChange={handleChange} 
-                        />
-                    </div>
-                    <button 
-                        type="submit" 
-                        className="register"
-                        onClick={handleSubmitClick}
-                    >
-                        Register
-                    </button>
-                </form>
+                            <div className="form-group text-left">
+                                <label>First Name</label>
+                                <input type="text" 
+                                    className="form-control" 
+                                    id="firstname" 
+                                    placeholder="First Name"
+                                    value={state.firstname}
+                                    onChange={handleChange} 
+                                />
+                            </div>
 
-                {/* <p> firstname : {state.firstname}</p>
-                <p> password : {state.password}</p> */}
+                            <div className="form-group text-left">
+                                <label>Last Name</label>
+                                <input type="text" 
+                                    className="form-control" 
+                                    id="lastname" 
+                                    placeholder="Last Name"
+                                    value={state.lastname}
+                                    onChange={handleChange} 
+                                />
+                            </div>
+
+                            <div className="form-group text-left">
+                                <label>Gender</label>
+                                <input type="text" 
+                                    className="form-control" 
+                                    id="gender" 
+                                    placeholder="Gender"
+                                    value={state.gender}
+                                    onChange={handleChange} 
+                                />
+                            </div>
+
+                            <div className="form-group text-left">
+                            <label htmlFor="exampleInputEmail1">Email address</label>
+                                <input type="email" 
+                                    className="form-control" 
+                                    id="email" 
+                                    aria-describedby="emailHelp" 
+                                    placeholder="Email" 
+                                    value={state.email}
+                                    onChange={handleChange}
+                                />
+
+                            </div>
+                            <div className="form-group text-left">
+                                <label htmlFor="exampleInputPassword1">Password</label>
+                                <input type="password" 
+                                    className="form-control" 
+                                    id="password" 
+                                    placeholder="Password"
+                                    value={state.password}
+                                    onChange={handleChange} 
+                                />
+                            </div>
+                            <div className="form-group text-left">
+                                <label htmlFor="exampleInputPassword1">Confirm Password</label>
+                                <input type="password" 
+                                    className="form-control" 
+                                    id="confirmPassword" 
+                                    placeholder="Confirm Password"
+                                    value={state.confirmPassword}
+                                    onChange={handleChange} 
+                                />
+                            </div>
+                            <button 
+                                type="submit" 
+                                className="register"
+                                onClick={handleSubmitClick}
+                            >
+                                Register
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+
 
             </div>
         )}
