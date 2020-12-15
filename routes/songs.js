@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/removeASong', async(req, res) => {
+router.post('/removeASong', async (req, res) => {
   console.log(req.body)
   try {
     const songId = req.body.songId.toString();

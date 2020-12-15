@@ -2,8 +2,16 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const bcrypt = require('bcryptjs');
+const xss = require('xss');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+// 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
 
-// const xss = require('xss');
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: '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'
+  }
+}))
 
 async function getUserByEmail(email) {
   const userList = await data.users.getUsers();
@@ -16,45 +24,52 @@ async function getUserByEmail(email) {
   throw `No user found`;
 }
 
-router.post('/add', async (req, res) => {
-
+router.post('/signup', async (req, res) => {
   try {
-    const newUser = await data.users.addUser(req.body.firstName, req.body.lastName, req.body.gender,
-        req.body.email, req.body.password);
-    res.json(newUser);
+    transporter.sendMail({
+      to: user.email,
+      from: 'no-reply@webkiller-spotify.com',
+      subject: 'signup success',
+      html: '<h1>Welcome to Webkiller spotify!</h1>'
+    })
+    res.json({message: 'sign up successfully!'});
+  } catch (e) {
+    console.log(e);
+  }
+});
 
+router.post('/add', async (req, res) => {
+  try {
+    const newUser = await data.users.addUser(xss(req.body.firstName), xss(req.body.lastName), xss(req.body.gender),
+        xss(req.body.email), xss(req.body.password));
+    res.json(newUser);
   } catch (e) {
     console.log('error: ' + e);
-		res.status(500).json(e);
-
-    // res.sendStatus(500);
+    res.status(500).json(e);
   }
 });
 
 router.post('/login', async (req, res) => {
 
   try {
-
     let user = await getUserByEmail(req.body.email);
     let flag = await bcrypt.compare(req.body.password, user.password);
-    console.log(user)
-    console.log(user._id)
+    // console.log(user)
+    // console.log(user._id)
     if (flag) {
       // req.session.loginOrNot = true;
       // req.session.userEmail = user.email;
       res.json(user);
-
     } else {
       res.status(500).json("error: the email or password is wrong");
     }
   } catch (e) {
-    // console.log("error: " + e);
-		res.status(500).json(e);
+    res.status(500).json(e);
   }
 });
 
 //JP parts
-router.post('/addsong', async(req, res) => {
+router.post('/addsong', async (req, res) => {
   try {
     let newSong = {
       title: req.body.title,
@@ -68,26 +83,26 @@ router.post('/addsong', async(req, res) => {
     const user = await getUserByEmail(req.body.userEmail);
 
     //add song to song list
-    const songId = await data.songs.addSong(newSong.title, newSong.artist, newSong.artistId, newSong.albumName, newSong.albumId,newSong.playUrl,newSong.songId);
+    const songId = await data.songs.addSong(newSong.title, newSong.artist, newSong.artistId, newSong.albumName, newSong.albumId, newSong.playUrl, newSong.songId);
     //add song to user favorite song list
     await data.users.addSongToUser(user._id.toString(), songId.toString());
 
     res.status(200).json(newSong)
-  } catch(e) {
+  } catch (e) {
     console.log({error: e})
   }
 });
 
-router.post('/favoriteSongs', async(req,res) => {
+router.post('/favoriteSongs', async (req, res) => {
   try {
     const user = await getUserByEmail(req.body.userEmail);
     res.status(200).json(user.likedSongs)
-  }catch(e) {
+  } catch (e) {
     console.log({error: e})
   }
 });
 
-router.post('/removeSong', async(req, res) => {
+router.post('/removeSong', async (req, res) => {
   try {
     const user = await getUserByEmail(req.body.userEmail);
     const userId = user._id.toString();
@@ -98,7 +113,5 @@ router.post('/removeSong', async(req, res) => {
     console.log({error: e})
   }
 });
-
-
 
 module.exports = router;
