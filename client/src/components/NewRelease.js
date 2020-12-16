@@ -48,7 +48,8 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
     },
     list_name:{
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'black'
     }
 });
 

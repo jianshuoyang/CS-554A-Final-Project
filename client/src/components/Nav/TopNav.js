@@ -5,8 +5,6 @@ import UserProfile from '../UserProfile';
 import { Navbar,Nav,NavDropdown } from 'react-bootstrap'
 import { AppBar } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Search from '../Search'
 const useStyles = makeStyles({
     topnav:{
         overflow: "hidden",
@@ -81,15 +79,6 @@ const TopNav = (props)=>{
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                {/* <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-                {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                </NavDropdown> */}
                 </Nav>
                 <Nav>
                 <Nav.Link href="http://localhost:3000/register">Register</Nav.Link>
@@ -102,35 +91,6 @@ const TopNav = (props)=>{
             </AppBar>
         )
     }
-    //return(
-    //     <header className="App-header">
-    //     {/* <TopNav></TopNav> */}
-    //     {(isAuthenticated) ? (
-    //       <div>
-    //         < button class="login"  className="login" onClick={handleLogout} >
-    //             Logout
-    //         </button>
-    //         <p class = "login" style={{fontSize:'30px'}}>  To logout you might need double click</p>
-    //         <p class = "login" style={{fontSize:'30px'}}> <a href= "http://localhost:3000/register"> Register </a></p>
-    //       </div>
-    //       ) : (
-    //     <div>
-    //         <h1 className="App-title"> Welcome To Our Music Website </h1>
-    //         <p class = "login" style={{fontSize:'30px'}}>
-    //         <a href= "http://localhost:3000/" > Categories</a> </p>
-
-    //         <p class = "login" style={{fontSize:'30px'}}>
-    //         <a  href= "http://localhost:3000/login"> Login </a></p>
-
-    //         <p class = "login" style={{fontSize:'30px'}}>
-    //         <a href= "http://localhost:3000/register"> Register</a></p>
-
-    //         <p class = "login" style={{fontSize:'30px'}}>
-    //         <a  href= {url} > Open Spotify Online </a></p>
-    //         </div>
-    //       )}
-    //   </header>
-    //)
 }
 
 export default withRouter(TopNav);

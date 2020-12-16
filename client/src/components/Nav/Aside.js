@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useIntl } from 'react-intl';
 import {
   ProSidebar,
   Menu,
@@ -32,7 +31,6 @@ const Aside = () => {
       userHasAuthenticated(false);
     }
   }
-  const intl = useIntl();
   function handleLogout() {
     window.sessionStorage.setItem("userEmail", "");
     userHasAuthenticated(false);
@@ -41,7 +39,7 @@ const Aside = () => {
   const buildCard = (letter)  => {
     let url = '/searchsingers/' + letter;
     return(
-      <MenuItem>  <a href={url}> {intl.formatMessage({ id: letter })} </a></MenuItem>
+      <MenuItem key={letter}>  <a href={url}> { letter } </a></MenuItem>
     );
 };
   const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","X","Y","Z"];
@@ -64,7 +62,7 @@ const Aside = () => {
             whiteSpace: 'nowrap',
           }}
         >
-          {intl.formatMessage({ id: 'Music Website' })}
+          Music Website
         </div>
       </SidebarHeader>
 
@@ -72,31 +70,31 @@ const Aside = () => {
         <Menu iconShape="circle">
         <MenuItem icon={<MdHome />}>
             <a href="/">
-            {intl.formatMessage({ id: 'Home' })}
+            Home
             </a>
           </MenuItem>
           <MenuItem icon={<MdSearch />}>
             <a href="/search">
-            {intl.formatMessage({ id: 'Search' })}
+            Search
             </a>
           </MenuItem>
           <MenuItem icon={<BsFillMusicPlayerFill />}>
             <a href="/categories">
-             {intl.formatMessage({ id: 'All Categories' })}
+              All Categories
              </a>
           </MenuItem>
           <MenuItem icon={<FaGem />}>
           <a href="/newRelease">
-          {intl.formatMessage({ id: 'New Release' })}
+          New Release
           </a>
           </MenuItem>
           <MenuItem icon={<FaHeart />}>
           <a href="/likedpage">
-          {intl.formatMessage({ id: 'Favorite List' })}
+          Favorite List
           </a>
           </MenuItem>
           <SubMenu
-            title={intl.formatMessage({ id: 'Singers' })}
+            title={'Singers'}
             icon={<IoIosPeople />}
           >
           {card}
@@ -108,7 +106,7 @@ const Aside = () => {
       <Menu iconShape="circle">
           <MenuItem icon={<FaGem />}>
           <a href="/account">
-          {intl.formatMessage({ id: 'My Account' })}
+          My Account
           </a>
           </MenuItem>
         </Menu>
@@ -126,7 +124,7 @@ const Aside = () => {
             rel="noopener noreferrer"
           >
             <FiLogOut />
-            <span> {intl.formatMessage({ id: 'Sign out' })}</span>
+            Sign out
           </a>
         </div>
       </SidebarFooter>

@@ -9,8 +9,8 @@ const Home = () => {
     
     if (e) {
         return (
-            <div class="home">
-                <p class = "welcome" style={{fontSize:'30px'}}>
+            <div className="home">
+                <p className = "welcome" style={{fontSize:'30px'}}>
 
                     Welcome<br/>
                     Spotify was founded in 2006 in Stockholm, Sweden, the company's title was initially misheard from a name shouted by Lorentzon. Later they thought out an etymology of a combination of "spot" and "identify."
@@ -18,12 +18,12 @@ const Home = () => {
                 </p>
 
                 {/* <button class="homeBTN" style="vertical-align:middle"><span>Hover </span></button> */}
-                <div class="child">
+                <div className="child">
                     <button
-                    class="button" 
+                    className="button" 
                     >
                     <span>
-                        <a class="homeURL"
+                        <a className="homeURL"
                             href= "http://localhost:3000/categories"
                         >
                             Categories
@@ -32,10 +32,10 @@ const Home = () => {
                     </button>
 
                     <button
-                    class="button" 
+                    className="button" 
                     >
                     <span>
-                        <a class="homeURL"
+                        <a className="homeURL"
                             href= "http://localhost:3000/likedpage"
                         >
                             Liked Songs
@@ -44,10 +44,10 @@ const Home = () => {
                     </button>
 
                     <button
-                    class="button" 
+                    className="button" 
                     >
                     <span>
-                        <a class="homeURL"
+                        <a className="homeURL"
                             href= "http://localhost:3000/toplists/playList"
                         >
                             Top List
@@ -56,10 +56,10 @@ const Home = () => {
                     </button>
 
                     <button
-                    class="button" 
+                    className="button" 
                     >
                     <span>
-                        <a class="homeURL"
+                        <a className="homeURL"
                             href= "http://localhost:3000/account"
                         >
                             My Profile
@@ -74,9 +74,9 @@ const Home = () => {
 
     return (
         
-		<div class="home">
+		<div className="home">
 
-            <p class = "welcome" style={{fontSize:'30px'}}>
+            <p className = "welcome" style={{fontSize:'30px'}}>
 
                 Welcome to music website, you can access other page after login <br/>
                 If you don't want to login you can &nbsp;

@@ -10,7 +10,7 @@ const My404Component = () => {
         
 		<div>
 
-            <p class = "login" style={{fontSize:'30px'}}>
+            <p className = "login" style={{fontSize:'30px'}}>
 
                 404 Not Found &nbsp;
                 

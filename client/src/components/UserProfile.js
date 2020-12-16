@@ -47,13 +47,13 @@ const UserProfile = (props) => {
     return (
 		<div>
   
-        <p class = "login" style={{fontSize:'30px'}}>
+        <p className = "login" style={{fontSize:'30px'}}>
   
           Login Successful!
         </p>
 
         
-        <p class = "login" style={{fontSize:'30px'}}>
+        <p className = "login" style={{fontSize:'30px'}}>
 
                 <a
                     href= {playerUrl}

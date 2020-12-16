@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import Pagination from '@material-ui/lab/Pagination';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardActionArea,  Grid,  makeStyles, AppBar,Tab } from '@material-ui/core';
-import Image from 'react-bootstrap/Image'
 import noImage from '../img/download.jpeg';
 import '../App.css';
 const useStyles = makeStyles({
@@ -48,7 +46,11 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
-	}
+    },
+    list_name:{
+        textAlign: 'center',
+        color: 'black'
+    }
 });
 
 const Search = (props) =>{
@@ -121,8 +123,8 @@ const Search = (props) =>{
                 <CardActionArea>
                     <Link to={genre.type==='artist'?`/albumList/${genre.id}`:genre.type==='album'?`/albums/songsList/${genre.id}`:`/playlists/songsList/${genre.id}`}>
                     <div className='category-image'>
-                        <img alt="category" src={genre.images && genre.images.length === 0 ? noImage : genre.images[0].url} width='100%'/>
-                         <p className='category-name'>{genre.name}</p>
+                        <img alt="category" src={genre.images && genre.images.length === 0 ? noImage : genre.images[0].url} width='100%' height='180px'/>
+                         <p className={classes.list_name}>{genre.name}</p>
                     </div>
                     </Link>
                 </CardActionArea>

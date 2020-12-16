@@ -152,7 +152,7 @@ const SearchSinger = (props) =>{
                         <Link to={`/albumList/${genre.id}`}>
                         <div className='category-image'>
                         <img alt="category" src={genre.images && genre.images.length === 0 ? noImage : genre.images[0].url} width='100%' height='180px'/>
-                         <p className='category-name'>{genre.name}</p>
+                         <p className= {classes.list_name}> {genre.name}</p>
                          </div>
                         </Link>
                     </CardActionArea>
@@ -179,7 +179,7 @@ const SearchSinger = (props) =>{
             return (
                 <div>
                     <AppBar position="static" className={classes.appbar}>
-                    <Tab  label="All Categories" />
+                    <Tab  label={props.match.params.letter} />
                     </AppBar>
                     <Grid container className={classes.grid} spacing={2}>
                         {card}
