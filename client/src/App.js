@@ -25,8 +25,13 @@ import SearchSingers from './components/SearchSinger'
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const e = window.sessionStorage.getItem("userEmail");
+<<<<<<< Updated upstream
   const [userEmail]= useState(e);
 
+=======
+  const [userEmail, setUserEmail]= useState(e);
+  const [locale, setLocale] = useState('en');
+>>>>>>> Stashed changes
   console.log("user email: " + userEmail);
   console.log("userHasAuthenticated: " + isAuthenticated);
 
@@ -50,7 +55,7 @@ function App() {
   }
   return (
 
-    <IntlProvider locale='en'>
+    <IntlProvider locale={locale}> 
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
 
           <Router>
