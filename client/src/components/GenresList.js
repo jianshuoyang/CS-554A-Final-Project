@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 	},
 	pages: {
 		textAlign: 'center',
-		margin: '100px',
+        margin: '100px',
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
@@ -179,6 +179,7 @@ const GenresList = (props) =>{
         }else {
             return (
                 <div>
+                    <Grid>
                     <AppBar position="static" className={classes.appbar}>
                     <Tab  label="All Categories" />
                     </AppBar>
@@ -189,7 +190,7 @@ const GenresList = (props) =>{
                     <div className={classes.pages}>
                         <Pagination count={total} page={page} defaultPage={page} onChange={changePageHandle} variant="outlined" shape="rounded" hidePrevButton={isFirst} hideNextButton={isLast} />
                     </div>}
-
+                    </Grid>
                 </div>
             );
         }

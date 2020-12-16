@@ -59,7 +59,6 @@ function App() {
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
 
           <Router>
-            
             {/* <TopNav></TopNav> */}
             {/* <Aside/> */}
             {isAuthenticated ? (
@@ -68,7 +67,6 @@ function App() {
                   {/* <TopNav /> */}
                   <Switch>
                     {/* Yichao's routes */}
-                    
                     <Route exact path="/" component={Home} />
                     <Route exact path="/userprofile" component={UserProfile} />
 

@@ -50,6 +50,7 @@ const useStyles = makeStyles({
         background: '#006600',
         height: '80px',
         zIndex: 2,
+        marginTop:'200px'
     },
     song_controls:{
         justifyContent: 'center',

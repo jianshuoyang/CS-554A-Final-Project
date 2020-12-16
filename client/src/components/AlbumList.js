@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
     },
     song_title_header:{
-        width: '300px'
+        width: '220px'
     },
     song_title_header1: {
         width: '300px'
@@ -292,6 +292,7 @@ const AlbumList = (props) => {
             </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
+            <Grid item lg={11}>
             <div className={classes.song_header_container}>
                 <div className={classes.empty}></div>
                 <div className={classes.song_title_header}>
@@ -311,9 +312,12 @@ const AlbumList = (props) => {
                 </div>
 
             </div>
+            </Grid>
+            <Grid item lg={11}>
             {topList}
+            </Grid>
             </TabPanel>
-            <div className={classes.pages}>No More</div>
+            <div className={classes.pages}></div>
           </div>
         );
     }

@@ -49,7 +49,7 @@ const Aside = () => {
     return buildCard(letter);
 });
   return (
-    <div className='Proside'>
+    <div className='Proside' >
     <ProSidebar image={sidebarBg}>
       <SidebarHeader>
         <div
@@ -85,12 +85,12 @@ const Aside = () => {
              {intl.formatMessage({ id: 'All Categories' })}
              </a>
           </MenuItem>
-          <MenuItem icon={<FaGem />}> 
+          <MenuItem icon={<FaGem />}>
           <a href="/newRelease">
           {intl.formatMessage({ id: 'New Release' })}
           </a>
           </MenuItem>
-          <MenuItem icon={<FaHeart />}> 
+          <MenuItem icon={<FaHeart />}>
           <a href="/likedpage">
           {intl.formatMessage({ id: 'Favorite List' })}
           </a>
@@ -106,7 +106,7 @@ const Aside = () => {
 
       <SidebarFooter style={{ textAlign: 'center' }}>
       <Menu iconShape="circle">
-          <MenuItem icon={<FaGem />}> 
+          <MenuItem icon={<FaGem />}>
           <a href="/account">
           {intl.formatMessage({ id: 'My Account' })}
           </a>

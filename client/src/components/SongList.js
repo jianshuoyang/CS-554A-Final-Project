@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {  withRouter } from 'react-router-dom';
 import Song from './Song';
 import Pagination from '@material-ui/lab/Pagination';
-import { makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import Information from './Infotmation';
 import { useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
@@ -280,9 +280,13 @@ const SongList = (props)=>{
         return(
 
         <div>
+            <Grid>
+                <Grid item lg={11}>
             <div>
                 <Information artists={artists} date={date} name={name} image={image}  id='' popularity=''  follower={follow} description={description} owner={owner} related_album={related_album}></Information>
             </div>
+            </Grid>
+            <Grid item lg={11}>
             <div className={classes.song_header_container}>
             <div className={classes.play_control_header}>
 
@@ -303,11 +307,15 @@ const SongList = (props)=>{
             <p className={classes.p}>Duration</p>
             </div>
             </div>
+            </Grid>
+            <Grid item lg={11}>
             {card}
+            </Grid>
             {total === 1?<div className={classes.pages}>No More</div>:
                 <div className={classes.pages}>
                 <Pagination count={total} page={page} defaultPage={page} onChange={changePageHandle} variant="outlined" shape="rounded" hidePrevButton={isFirst} hideNextButton={isLast} />
             </div>}
+            </Grid>
             </div>
         );
     }
