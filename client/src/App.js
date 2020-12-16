@@ -8,8 +8,6 @@ import UserProfile from './components/UserProfile';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import My404Component from './components/My404Component';
-
-
 import AlbumList from './components/AlbumList'
 import GenresList from './components/GenresList'
 import PlayList from './components/PlayList'
@@ -28,8 +26,6 @@ function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const e = window.sessionStorage.getItem("userEmail");
   const [userEmail, setUserEmail]= useState(e);
-
-
 
   console.log("user email: " + userEmail);
   console.log("userHasAuthenticated: " + isAuthenticated);
@@ -54,8 +50,7 @@ function App() {
   }
   return (
 
-
-    <IntlProvider>
+    <IntlProvider locale='en'>
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
 
           <Router>
@@ -87,13 +82,13 @@ function App() {
 
                     <Route component={My404Component}/>
                   </Switch>
-                  <Songplay></Songplay>
+                  <Songplay/>
                 </div>
             )
             :
             (
               <div>
-                  <TopNav></TopNav>
+                  <TopNav/>
                   <Switch>
                     {/* Yichao's routes */}
 
@@ -117,7 +112,7 @@ function App() {
                     <Route component={My404Component}/>
 
                   </Switch>
-                  <Songplay></Songplay>
+                  <Songplay/>
                 </div>
             )}
           </Router>
