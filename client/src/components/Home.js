@@ -61,7 +61,7 @@ const Home = () => {
                     >
                     <span>
                         <a class="homeURL"
-                            href= "http://localhost:3000/"
+                            href= "http://localhost:3000/account"
                         >
                             My Profile
                         </a> 
