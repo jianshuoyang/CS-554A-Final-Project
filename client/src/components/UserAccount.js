@@ -17,7 +17,7 @@ const axios = require('axios').default;
 
 const useStyles = makeStyles({
     account: {
-        maxWidth: 800,
+        width: "100%",
         height: "100%",
         align: 'center'
     },
