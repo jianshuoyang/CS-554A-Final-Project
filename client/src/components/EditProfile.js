@@ -5,16 +5,26 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EditIcon from '@material-ui/icons/Edit';
-import  {makeStyles,} from "@material-ui/core";
+import  {makeStyles, Grid} from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 const axios = require('axios');
-
 
 const useStyles = makeStyles((theme) => ({
     form: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
-            width: '25ch',
+            width: '15ch',
         },
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
     },
 }));
 export default function FormDialog() {
@@ -34,19 +44,18 @@ export default function FormDialog() {
     const handleClose = () => {
         setOpen(false);
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(firstNameRef.current)
-        console.log(formData)
+        console.log(formData);
         try {
             let updateInfo = {
                 userEmail: window.sessionStorage.userEmail,
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 gender: formData.gender,
-            }
-            const updateRes = axios.post('http://localhost:5000/users/updateUser', updateInfo)
+            };
+            const updateRes = axios.post('http://localhost:5000/users/updateUser', updateInfo);
+            window.location.reload()
         } catch(e) {
             console.log()
         }
@@ -60,11 +69,6 @@ export default function FormDialog() {
             })
         }
     };
-
-    const handleRefresh = () => {
-        window.location.reload()
-    }
-
 
     return (
         <div>
@@ -96,21 +100,37 @@ export default function FormDialog() {
                             name="lastName"
                             onChange={handleChange}
                         />
-                        <TextField className="form-group"
-                            required
-                            id="outlined-required"
-                            label="Gender"
-                            name="gender"
-                            onChange={handleChange}
-                        />
+                        <FormControl  className={classes.formControl}>
+                            <InputLabel>gender</InputLabel>
+                            <Select
+                                required
+                                id="outlined-required"
+                                name="gender"
+                                value={formData.gender}
+                                displayEmpty
+                                className={classes.selectEmpty}
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={"Male"}> Male</MenuItem>
+                                <MenuItem value={"Female"}>Female</MenuItem>
+                                <MenuItem value={"Transgender"}>Transgender</MenuItem>
+                                <MenuItem value={"Gender-neutral"}>Gender-neutral</MenuItem>
+                                <MenuItem value={"Non-binary"}>Non-binary</MenuItem>
+                                <MenuItem value={"Others"}>Others</MenuItem>
+                            </Select>
+                        </FormControl>
                         <br/>
                         <br/>
-                        <Button onClick={handleClose} color="primary" align='right'>
-                            Cancel
-                        </Button>
-                        <Button type="submit" onClick={handleRefresh} color="primary" align='right'>
-                            Submit
-                        </Button>
+                        <Grid container justify="flex-end">
+                            <Button onClick={handleClose} color="primary" align='right'>
+                                Cancel
+                            </Button>
+                            <Button type="submit" color="primary" align='right'>
+                                Submit
+                            </Button>
+                        </Grid>
+
                     </form>
                 </DialogContent>
             </Dialog>
