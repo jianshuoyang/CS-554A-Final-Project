@@ -154,7 +154,7 @@ const Search = (props) =>{
         );
     }else {
             return (
-                <div>
+                <div className = 'searchbox'>
                     <div className="form__group field">
                     <form
                         className = "searchform"
@@ -164,7 +164,7 @@ const Search = (props) =>{
                         }}
                         name='formName'
                     >
-                        <input className="form__field" autoComplete='off' type='text' name='searchTerm' placeholder="Search" onChange={handleChange} />
+                        <input className="form__field" autoComplete='off' type='text' name='searchTerm' placeholder="Search Artists, Albums or PlayList" onChange={handleChange} />
                         <label for="name" class="form__label">Search</label>
                     </form>
                     </div>
@@ -189,7 +189,7 @@ const Search = (props) =>{
                         </Grid>
                     </div>):(
                     <div>
-                        <h1 className ="searchh1">Search Artists, Albums or PlayList</h1>
+                        {/* <h1 className ="searchh1">Search Artists, Albums or PlayList</h1> */}
                     </div>
                      )}
                     {/* {total === 1?<div className={classes.pages}>No More</div>:

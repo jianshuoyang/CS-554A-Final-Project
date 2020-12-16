@@ -6,6 +6,7 @@ import { Navbar,Nav,NavDropdown } from 'react-bootstrap'
 import { AppBar } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Search from '../Search'
 const useStyles = makeStyles({
     topnav:{
         overflow: "hidden",
@@ -62,7 +63,6 @@ const TopNav = (props)=>{
                 <NavDropdown title={userEmail} id="collasible-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Account</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="/account">My Account</NavDropdown.Item>
                     <NavDropdown.Item href="/likedpage">Favorite List</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleLogout} >Log out</NavDropdown.Item>
