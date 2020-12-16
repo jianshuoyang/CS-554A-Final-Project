@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
 import addSong from '../actions/addSong'
+import axios from 'axios'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles({
 	song_li: {
@@ -101,7 +103,9 @@ const useStyles = makeStyles({
 const Song = (props)=>{
     const classes = useStyles();
     const [ play, setPlay] = useState(false);
-    const [ pause, setPause] = useState(true);
+    //const [ pause, setPause] = useState(true);
+    const [ message, setMessage] = useState('');
+    const [open, setOpen] = useState(false);
     const allState = useSelector((state) => state);
     const songsPlay = allState.songsPlay;
     const songR = allState.songsPlay.song;
@@ -132,7 +136,7 @@ const Song = (props)=>{
     const handleChange=(song)=>{
         if(play){
             dispatch(playAction.pauseSong());
-            setPause(true);
+            //setPause(true);
             setPlay(false);
             //pauseSong();
 
@@ -140,7 +144,7 @@ const Song = (props)=>{
             if(song.track.preview_url){
                 console.log(song);
                 dispatch(playAction.playSong(song,index));
-                setPause(false);
+                //setPause(false);
                 setPlay(true);
                 //audioControl(song);
             }else{
@@ -148,23 +152,69 @@ const Song = (props)=>{
             }
         }
     }
+    async function checkExist(ID){
+        try{
+            const userInfo = {
+                userEmail: window.sessionStorage.userEmail
+            };
+            const existSongs = await axios.post('http://localhost:5000/users/favoriteSongs', userInfo);
+            const existSong = existSongs.data;
+            for(let i =0; i<existSong.length;i++){
+                if(existSong[i].songId===ID){
+                    return true;
+                }
+            }
+            return false;
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+    function handleOpen (mes) {
+        setMessage(mes);
+        setOpen(true);
+
+    };
+    function handleClose ()  {
+        setOpen(false);
+    };
     async function handleAdd(song){
         if(window.sessionStorage.userEmail){
-            console.log(window.sessionStorage.userEmail);
-            const favoriteSong = {
-                artist: song.track.artists[0].name,
-                albumName: song.track.album?song.track.album.name : '-',
-                artistId:song.track.artists[0].id,
-                albumId:song.track.album?song.track.album.id : '-',
-                title:song.track.name,
-                playUrl:song.track.preview_url,
-                songId:song.track.id,
+            const result = await checkExist(song.track.id);
+            if(result === true){
+                handleOpen('The song has been added')
+            }else if(result === false){
+                const favoriteSong = {
+                    artist: song.track.artists[0].name,
+                    albumName: song.track.album?song.track.album.name : '-',
+                    artistId:song.track.artists[0].id,
+                    albumId:song.track.album?song.track.album.id : '-',
+                    title:song.track.name,
+                    playUrl:song.track.preview_url,
+                    songId:song.track.id,
+                }
+                await addSong(favoriteSong);
+                handleOpen('Successfully Added')
+            }else{
+                handleOpen('Fail Add')
             }
-            await addSong(favoriteSong);
+        }else{
+            handleOpen('Please log in');
         }
 
     }
     return (
+        <div>
+        <Snackbar
+                    anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                    }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={message}
+                />
         <li className={classes.song_li} >
             <div  className={classes.play_control} onClick={()=>handleChange(song, index)}>
                 {play&&songsPlay.globalPlay&&song.track.id===songR.track.id?<PauseCircleOutlineIcon></PauseCircleOutlineIcon>
@@ -205,6 +255,7 @@ const Song = (props)=>{
             </div>
 
         </li>
+        </div>
     )
 }
 export default withRouter(Song);

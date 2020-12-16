@@ -9,7 +9,6 @@ import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
-import { deprecationHandler } from "moment";
 
 const useStyles = makeStyles({
     song_details :{
@@ -93,7 +92,7 @@ const SongPlay = (props)=>{
                 let song = {
                     track: everySong
                 }
-                songTrackList.push(song);
+                return songTrackList.push(song);
 
 
             });
@@ -116,13 +115,13 @@ const SongPlay = (props)=>{
         }
     };
 
-    const resumeSong = () => {
-        if (audio) {
-        //this.props.resumeSong();
-        audio.play();
+    // const resumeSong = () => {
+    //     if (audio) {
+    //     //this.props.resumeSong();
+    //     audio.play();
 
-        }
-    };
+    //     }
+    // };
 
 
     const audioControl = (song, index) => {
@@ -168,8 +167,9 @@ const SongPlay = (props)=>{
         songTrackList.map((everySong, index) => {
           if (everySong.track.id === song.track.id) {
               songIndex = index;
-            return songIndex;
+            //return songIndex;
           }
+          return songIndex;
         });
         if(songIndex){
             return songIndex;

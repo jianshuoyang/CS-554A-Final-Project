@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import download from '../img/download.jpeg'
 
-import {Chip, Avatar, Link} from '@material-ui/core';
+import {Chip, Avatar} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -191,7 +191,7 @@ useEffect(() => {
                     <div >
                     {popularity}
                     </div>
-                </div>:owner=='author'?<div variant="subtitle1" color="textSecondary" className={classes.tag} >
+                </div>:owner==='author'?<div variant="subtitle1" color="textSecondary" className={classes.tag} >
                     <span className={classes.span_label}>Release Date:</span>
                     <div >
                     {date}

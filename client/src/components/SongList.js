@@ -4,7 +4,7 @@ import Song from './Song';
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core';
 import Information from './Infotmation';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
 const useStyles = makeStyles({
 	card: {
