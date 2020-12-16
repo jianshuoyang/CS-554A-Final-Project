@@ -50,22 +50,22 @@ function RegistrationForm(props) {
         try {
             
 
-            if (state.firstname == "") {
+            if (state.firstname === "") {
                 alert("firstname cannot be null");
             }
-            else if (state.lastname == "") {
+            else if (state.lastname === "") {
                 alert("lastname cannot be null");
             }
-            else if (state.gender == "") {
+            else if (state.gender === "") {
                 alert("gender cannot be null");
             }
-            else if (state.email == "") {
+            else if (state.email === "") {
                 alert("email cannot be null");
             }
-            else if (state.password == "") {
+            else if (state.password === "") {
                 alert("password cannot be null");
             }
-            else if (state.confirmPassword == "") {
+            else if (state.confirmPassword === "") {
                 alert("confirmPassword cannot be null");
             }
             if (state.password === state.confirmPassword) {

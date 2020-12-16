@@ -25,7 +25,7 @@ import SearchSingers from './components/SearchSinger'
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const e = window.sessionStorage.getItem("userEmail");
-  const [userEmail, setUserEmail]= useState(e);
+  const [userEmail]= useState(e);
 
   console.log("user email: " + userEmail);
   console.log("userHasAuthenticated: " + isAuthenticated);

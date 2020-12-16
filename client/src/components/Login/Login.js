@@ -38,10 +38,10 @@ export default function Login() {
     e.preventDefault();
     try {
         
-        if (state.email == "") {
+        if (state.email === "") {
             alert("email cannot be null");
         }
-        else if (state.password == "") {
+        else if (state.password === "") {
             alert("password cannot be null");
         }
         else{
