@@ -18,6 +18,7 @@ import { AppContext } from "./libs/contextLib";
 import Search from './components/Search';
 import LikedPage from './components/LikedPage';
 import NewRelease from './components/NewRelease';
+import UserAccount from './components/UserAccount';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
                     <Route exact path="/register" component={Register} />
                     {/* Weijie's routes */}
                     <Route exact path="/likedpage" component={LikedPage} />
+                    <Route exact path="/account" component={UserAccount} />
 
                     {/* Rupu's routes */}
                     <Route exact path='/categories' component={GenresList} />
