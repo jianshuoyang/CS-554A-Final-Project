@@ -6,14 +6,15 @@ const xss = require('xss');
 const multer = require('multer');
 const gm = require('gm').subClass({imageMagick:true});
 const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
-// 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
+require('dotenv').config();
 
-const transporter = nodemailer.createTransport(sendgridTransport({
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
   auth: {
-    api_key: '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'
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD
   }
-}))
+});
 
 const storage = multer.diskStorage({
   destination: "./public/uploads",
@@ -40,12 +41,21 @@ async function getUserByEmail(email) {
 
 router.post('/signup', async (req, res) => {
   try {
-    transporter.sendMail({
-      to: user.email,
-      from: 'no-reply@webkiller-spotify.com',
-      subject: 'signup success',
-      html: '<h1>Welcome to Webkiller spotify!</h1>'
-    })
+
+    let mailOption = {
+      from: 'xxx@gmail.com',
+      to: req.body.email,
+      subject: 'sign up success!',
+      text: 'sign up successfully (from web-killer-spotify)'
+    };
+
+    await transporter.sendMail(mailOption, function (err, data) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('email sent!');
+      }
+    });
     res.json({message: 'sign up successfully!'});
   } catch (e) {
     console.log(e);
