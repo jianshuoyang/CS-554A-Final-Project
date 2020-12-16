@@ -7,7 +7,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import Pagination from '@material-ui/lab/Pagination'
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import {Link} from '@material-ui/core'
@@ -33,7 +32,6 @@ const columns = [
     }
 
 ];
-
 
 // if(Nsong.track.preview_url){
 //     dispatch(playAction.playSong(song));
@@ -101,7 +99,7 @@ const LikedPage = () => {
     }
     useEffect(()=> {
         getFavoriteSongs();
-    }, [dataSize, page]);
+    }, [page]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -115,9 +113,10 @@ const LikedPage = () => {
     const handleRemoveSong = (songId) => {
         try {
             const result =  removeSong(songId);
-            SetDatSie(dataSize - 1);
+
             if(result) {
-                alert("Remove the song successfully")
+                alert("Remove the song successfully");
+                window.location.reload()
             }
         } catch(e) {
             console.log({error:e})
