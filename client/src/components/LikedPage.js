@@ -7,15 +7,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import {Link} from '@material-ui/core'
 import playAction from '../actions/playAction'
 import removeSong from "../actions/removeSong";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 const axios = require('axios').default;
 
 const columns = [
+    { id: 'play', label: 'Play', align: 'center', minWidth: 100 },
     { id: 'title', label: 'Title', align: 'center', minWidth: 100 },
     { id: 'artist', label: 'Artist', align: 'center', minWidth: 100 },
     {
@@ -33,13 +36,6 @@ const columns = [
 
 ];
 
-// if(Nsong.track.preview_url){
-//     dispatch(playAction.playSong(song));
-// }else{
-//     dispatch(playAction.toSong(song))
-// }
-
-
 const useStyles = makeStyles({
     root: {
         width: '100%',
@@ -56,7 +52,10 @@ const LikedPage = () => {
     const [dataSize, SetDatSie] = useState(0);
     const [loading, SetLoading] = useState(true);
     const [error, SetError] = useState(false);
-
+    const [ play, setPlay] = useState(false);
+    const allState = useSelector((state) => state);
+    const songsPlay = allState.songsPlay;
+    const songR = allState.songsPlay.song;
     const dispatch = useDispatch();
 
     async function getFavoriteSongs() {
@@ -123,6 +122,26 @@ const LikedPage = () => {
         }
     };
 
+    const handleSongPlay = (song) => {
+        if(play){
+            dispatch(playAction.pauseSong());
+            //setPause(true);
+            setPlay(false);
+            //pauseSong();
+
+        }else{
+            if(song.track.preview_url){
+                console.log(song);
+                dispatch(playAction.playSong(song));
+                //setPause(false);
+                setPlay(true);
+                //audioControl(song);
+            }else{
+                dispatch(playAction.toSong(song));
+            }
+        }
+    };
+
     if(loading) {
         return (
             <div>Loading....</div>
@@ -153,6 +172,11 @@ const LikedPage = () => {
                             {favoriteSongList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((favoriteSong) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={favoriteSong.storedId}>
+                                        <TableCell align='center' onClick={()=>handleSongPlay(favoriteSong)}>
+                                            {play&&songsPlay.globalPlay&&favoriteSong.track.id===songR.track.id?<PauseCircleOutlineIcon/>
+                                                : <PlayCircleOutlineIcon />
+                                            }
+                                        </TableCell>
                                         <TableCell align='center'>
                                             {favoriteSong.track? favoriteSong.track.name: '-'}
                                         </TableCell >
