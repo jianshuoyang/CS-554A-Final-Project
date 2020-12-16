@@ -3,7 +3,6 @@ import Button from "@material-ui/core/Button";
 import { DropzoneDialog } from "material-ui-dropzone";
 import AddAPhotoTwoToneIcon from '@material-ui/icons/AddAPhotoTwoTone';
 const axios = require('axios').default;
-
 const initialState = {
     open: false,
     files: []
@@ -11,7 +10,6 @@ const initialState = {
 
 export default function DropzoneDialogExample() {
     const [state, setState] = React.useState(initialState);
-
 
     const handleOpen = () => {
         setState({
@@ -40,8 +38,7 @@ export default function DropzoneDialogExample() {
                 'content-type': 'multipart/form-data'
             }
         };
-
-        const returnImg = axios.post('http://localhost:5000/users/addImg', formData, config)
+        axios.post('http://localhost:5000/users/addImg', formData, config)
             .then((response)=> {
             alert("Upload image successfully")
         }).catch((error)=> {console.log({error:error})})
