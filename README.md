@@ -13,7 +13,7 @@ Then locate to the project dir to install dependencies and locate to the client 
 ```
 npm install
 cd client
-npm instart
+npm install
 ```
 To run the application, you need to open a terminal to run the app.js:
 ```
