@@ -33,7 +33,6 @@ const columns = [
         minWidth: 100,
         align: 'center',
     }
-
 ];
 
 const useStyles = makeStyles({
@@ -79,7 +78,7 @@ const LikedPage = () => {
                                     id: song.artistId,
                                     name: song.artist
                                 }
-                                ],
+                            ],
                             name: song.title,
                             preview_url: song.playUrl,
                             id: song.songId
@@ -128,7 +127,6 @@ const LikedPage = () => {
             //setPause(true);
             setPlay(false);
             //pauseSong();
-
         }else{
             if(song.track.preview_url){
                 console.log(song);

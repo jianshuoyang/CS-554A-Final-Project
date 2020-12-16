@@ -35,8 +35,8 @@ export default function FormDialog() {
         lastName: '',
         gender: '',
     });
-
     const [formData, SetFormData] = useState(initialFormData);
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -54,12 +54,11 @@ export default function FormDialog() {
                 lastName: formData.lastName,
                 gender: formData.gender,
             };
-            const updateRes = axios.post('http://localhost:5000/users/updateUser', updateInfo);
+            axios.post('http://localhost:5000/users/updateUser', updateInfo);
             window.location.reload()
         } catch(e) {
             console.log()
         }
-
     };
     const handleChange = (e) => {
         if(e.target.name && e.target.value) {
