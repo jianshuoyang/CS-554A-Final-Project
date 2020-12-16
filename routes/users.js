@@ -43,10 +43,10 @@ router.post('/signup', async (req, res) => {
   try {
 
     let mailOption = {
-      from: 'xxx@gmail.com',
+      from: 'webkiller554@gmail.com',
       to: req.body.email,
       subject: 'sign up success!',
-      text: 'sign up successfully (from web-killer-spotify)'
+      text: 'Hi! You account number is: ' + req.body.email + ' Sign up successfully (from web-killer-spotify)'
     };
 
     await transporter.sendMail(mailOption, function (err, data) {

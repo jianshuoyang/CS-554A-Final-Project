@@ -25,7 +25,16 @@ function RegistrationForm(props) {
     console.log("error: " + registerError);
 
     
-
+    useEffect(() => {
+        onLoad();
+      }, [userEmail]);
+      
+      async function onLoad() {
+        if (userEmail) {
+            axios.post('http://localhost:5000/users/signup', {email: userEmail})
+        }
+    
+      }
 
     const handleChange = (e) => {
         const {id , value} = e.target   
@@ -37,7 +46,10 @@ function RegistrationForm(props) {
 
     const handleSubmitClick = (e) => {
         e.preventDefault();
+
         try {
+            
+
             if (state.firstname == "") {
                 alert("firstname cannot be null");
             }
@@ -70,6 +82,7 @@ function RegistrationForm(props) {
                     .catch(error => {
                         setRegisterError(error.message);
                     })
+                    
                 } catch (error){
                     console.log(error);
                 }
