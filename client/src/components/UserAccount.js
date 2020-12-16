@@ -112,7 +112,6 @@ const UserAccount = () => {
             </Card>
         )
     }
-
 };
 
 
