@@ -17,14 +17,20 @@ const axios = require('axios').default;
 
 const useStyles = makeStyles({
     account: {
-        width: "100%",
+        width: "90%",
         height: "100%",
-        align: 'center'
+        minHeight: 1000,
+    },
+    profile: {
+        width: "100%",
+        // backgroundColor: "yellow"
     },
     media: {
-        minHeight: 300,
+        minHeight: 120,
+        minWidth: 100,
+        height: "100%",
         width: "100%",
-        backgroundColor: 'lightblue'
+        // backgroundColor: 'lightblue'
     },
 });
 
@@ -65,51 +71,58 @@ const UserAccount = () => {
             <div>Error....</div>)
     } else {
         return(
-            <Card className={classes.account}>
-                <CardActionArea>
-                    <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                            <CardMedia
-                                className={classes.media}
-                                image={myImage}
-                                title="user image"
-                            >
-                            </CardMedia>
+            <Grid container justify='center' className={classes.profile}>
+                <Card container className={classes.account}>
+                    <CardActionArea container>
+                        <Grid container spacing={1}>
+                            <Grid item xs={4}>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={myImage}
+                                    title="user image"
+                                />
+                            </Grid>
+                            <Grid item xs={8}>
+                                <CardContent className={classes.content}>
+                                    <br/>
+                                    <Typography>
+                                        <PersonPinCircleOutlinedIcon/>
+                                        First Name: {user && user.firstName?user.firstName: "-"}
+                                    </Typography>
+                                    <br/>
+                                    <Typography>
+                                        <PersonPinCircleOutlinedIcon/>
+                                        Last Name: {user && user.lastName?user.lastName: "-"}
+                                    </Typography>
+                                    <br/>
+                                    <Typography>
+                                        <EmailOutlinedIcon/>
+                                        Email Address: {user && user.email?user.email: "-"}
+                                    </Typography>
+                                    <br/>
+                                    <Typography>
+                                        <PeopleOutlineOutlinedIcon/>
+                                        Gender: {user && user.gender?user.gender: "-"}
+                                    </Typography>
+                                </CardContent>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={8}>
-                            <CardContent>
-                                <br/>
-                                <Typography>
-                                    <PersonPinCircleOutlinedIcon/>
-                                    First Name: {user && user.firstName?user.firstName: "-"}
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <PersonPinCircleOutlinedIcon/>
-                                    Last Name: {user && user.lastName?user.lastName: "-"}
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <EmailOutlinedIcon/>
-                                    Email Address: {user && user.email?user.email: "-"}
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <PeopleOutlineOutlinedIcon/>
-                                    Gender: {user && user.gender?user.gender: "-"}
-                                </Typography>
-                            </CardContent>
+                    </CardActionArea>
+                    <br/>
+                    <br/>
+                    <CardActions >
+                        <Grid container item justify='flex-start' spacing={1} >
+                            <Grid item>
+                                <AddImage/>
+                            </Grid>
+                            <Grid item>
+                                <EditProfile/>
+                            </Grid>
                         </Grid>
+                    </CardActions>
+                </Card>
+            </Grid>
 
-                    </Grid>
-                </CardActionArea>
-                <CardActions>
-                    <AddImage/>
-                    <div>
-                        <EditProfile/>
-                    </div>
-                </CardActions>
-            </Card>
         )
     }
 };

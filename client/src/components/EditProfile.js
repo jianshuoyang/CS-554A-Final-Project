@@ -79,6 +79,7 @@ export default function FormDialog() {
                 Edit
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <h1/>
                 <DialogTitle id="form-dialog-title">Edit Profile Information</DialogTitle>
                 <DialogContent>
                     <form
