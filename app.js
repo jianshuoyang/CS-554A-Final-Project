@@ -6,6 +6,7 @@ const userRoutes = require("./routes/users");
 const songRoutes = require("./routes/songs");
 const commentRoutes = require("./routes/comments");
 const session = require('express-session');
+const path = require('path')
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.use(bodyParser.json());
 app.use("/users", userRoutes);
 app.use("/songs", songRoutes);
 app.use("/comments", commentRoutes);
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "Not found" });
