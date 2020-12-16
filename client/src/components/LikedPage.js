@@ -38,9 +38,11 @@ const columns = [
 const useStyles = makeStyles({
     root: {
         width: '100%',
+        minHeight: 1200,
     },
     container: {
-        maxHeight: 700,
+        minHeight: 700,
+        height: "100%",
     },
 });
 const LikedPage = () => {
@@ -151,6 +153,15 @@ const LikedPage = () => {
     } else {
         return (
             <Paper className={classes.root}>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={dataSize}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table" >
                         <TableHead>
@@ -197,15 +208,7 @@ const LikedPage = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={dataSize}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+
             </Paper>
         );
     }

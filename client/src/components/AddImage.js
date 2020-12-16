@@ -56,6 +56,7 @@ export default function DropzoneDialogExample() {
             >
                 Upload
             </Button>
+            <h1/>
             <DropzoneDialog
                 open={state.open}
                 onSave={handleSave}
