@@ -97,20 +97,25 @@ function App() {
               <div>
                   <TopNav></TopNav>
                   <Switch>
+                    {/* Yichao's routes */}
 
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
-                    <Route exact path='/search' component={Login} />
 
+                    {/* Weijie's routes */}
+                    <Route exact path="/likedpage" component={Home} />
+                    <Route exact path="/account" component={Home} />
+                    {/* Rupu's routes */}
                     <Route exact path='/categories' component={Home} />
                     <Route exact path='/:categories/playList' component={Home} />
                     <Route exact path='/:type/songsList/:id' component={Home} />
                     <Route exact path='/albumList/:id' component={Home} />
                     <Route exact path='/newRelease' component={Home} />
+                    {/* Donglin's routes */}
+                    <Route exact path='/search' component={Home} />
+                    <Route exact path='/searchsingers/:letter' component={Home} />
 
-                    <Route exact path="/likedpage" component={Home} />
-                    <Route exact path='/searchsingers' component={Home} />
                     <Route component={My404Component}/>
 
                   </Switch>
