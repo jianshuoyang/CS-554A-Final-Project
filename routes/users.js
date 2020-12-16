@@ -138,6 +138,17 @@ router.post('/addImg', upload, async(req, res) => {
   })
 });
 
+
+router.post('/getUser', async(req, res) => {
+  try {
+    const user = await getUserByEmail(req.body.userEmail);
+    res.status(200).json(user)
+  } catch(e) {
+    console.log({error:e})
+  }
+});
+
+
 router.post('/updateUser', async(req, res) => {
   console.log(req.body);
   let updateObj = {
