@@ -24,3 +24,4 @@ and open another terminal to locate to the client and start the app by:
 npm start
 ```
 
+And have fun!!
