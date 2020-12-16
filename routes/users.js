@@ -3,6 +3,8 @@ const router = express.Router();
 const data = require('../data');
 const bcrypt = require('bcryptjs');
 const xss = require('xss');
+const multer = require('multer');
+const gm = require('gm').subClass({imageMagick:true});
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 // 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
@@ -12,6 +14,18 @@ const transporter = nodemailer.createTransport(sendgridTransport({
     api_key: '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'
   }
 }))
+
+const storage = multer.diskStorage({
+  destination: "./public/uploads",
+  filename: function (req, file, cb) {
+    cb(null, "profileImage." + file.mimetype.split('/')[1])
+  }
+});
+const upload = multer({
+  storage: storage,
+  limit:{fileSize: 100000}
+}).single("myImg");
+
 
 async function getUserByEmail(email) {
   const userList = await data.users.getUsers();
@@ -68,7 +82,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-//JP parts
+
 router.post('/addsong', async (req, res) => {
   try {
     let newSong = {
@@ -111,6 +125,34 @@ router.post('/removeSong', async (req, res) => {
     res.status(200);
   } catch (e) {
     console.log({error: e})
+  }
+});
+
+router.post('/addImg', upload, async(req, res) => {
+  gm(req.file.path)
+      .blur(8,1)
+      .write('client/src/img/profileImage.jpeg', function(err) {
+    if(err) {
+      console.log(err)
+    }
+  })
+});
+
+router.post('/updateUser', async(req, res) => {
+  console.log(req.body);
+  let updateObj = {
+    firstName: req.body.firstName,
+
+    lastName: req.body.lastName,
+    gender: req.body.gender,
+  };
+  try {
+    const user = await getUserByEmail(req.body.userEmail);
+    const userId = user._id.toString();
+    await data.users.updateUserDelta(userId,updateObj);
+    res.status(200)
+  } catch(e) {
+    console.log({error:e})
   }
 });
 
