@@ -76,7 +76,7 @@
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #9b9b9b;
+  /* color: #9b9b9b; */
 }
 
 .form__field:focus {
@@ -184,6 +184,7 @@
 .searchbox{
   width: 100%;
   min-height: 120vh;
+  background-color: ffffff;
 }
 
 

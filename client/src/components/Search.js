@@ -166,8 +166,8 @@ const Search = (props) =>{
                         }}
                         name='formName'
                     >
-                        <input className="form__field" autoComplete='off' type='text' name='searchTerm' placeholder="Search Artists, Albums or PlayList" onChange={handleChange} />
-                        <label for="name" class="form__label">Search</label>
+                        <input  id="my-input" className="form__field" autoComplete='off' type='text' name='searchTerm' placeholder="Search Artists, Albums or PlayList" onChange={handleChange} />
+                        <label for="my-input" class="form__label">Search</label>
                     </form>
                     </div>
                      {(searchTerm) ? (<div>
