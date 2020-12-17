@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     },
     artist_name: {
         fontFamily: '"Proxima Nova" Georgia sans-serif',
-        color: '#aaa',
+        color: '#cccccc',
         fontSize: '12px'
       },
 
@@ -40,7 +40,8 @@ const useStyles = makeStyles({
         width: '500px',
         height: '4px',
         background: 'rgb(64, 64, 64)',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        marginRight:'220px',
       },
     footer :{
         position: 'fixed',
@@ -50,12 +51,13 @@ const useStyles = makeStyles({
         background: '#006600',
         height: '80px',
         zIndex: 2,
-        marginTop:'200px'
+        marginLeft:'220px'
     },
     song_controls:{
         justifyContent: 'center',
         display: 'flex',
         marginTop: '20px',
+        marginRight:'220px',
     },
     play_btn :{
         padding: "0 5px",

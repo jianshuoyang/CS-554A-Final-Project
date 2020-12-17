@@ -5,7 +5,7 @@ import { Card, CardActionArea,  Grid,  makeStyles,  Box, Tabs, Tab, AppBar } fro
 import '../App.css';
 import Song from './Song';
 import Information from './Infotmation';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import playAction from '../actions/playAction'
 const useStyles = makeStyles({
     card: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 		width: '100%'
 	},
 	button: {
-		color: '#1e8678',
+		//color: '#1e8678',
 		fontWeight: 'bold',
 		fontSize: 12
 	},
@@ -79,7 +79,8 @@ const useStyles = makeStyles({
         width: '250px',
     },
     list_name:{
-        textAlign: 'center'
+        textAlign: 'center',
+        color:'#0072ee',
     }
 });
 function TabPanel(props) {

@@ -88,7 +88,8 @@ const useStyles = makeStyles({
         width: '150px'
     },
     song_added_header: {
-        width: '200px'
+        width: '200px',
+        paddingLeft: '20px',
     },
     song_header_container: {
         display: 'flex',

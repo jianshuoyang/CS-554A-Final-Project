@@ -49,7 +49,7 @@ const useStyles = makeStyles({
     },
     list_name:{
         textAlign: 'center',
-        color: 'black'
+        color: '#0072ee',
     }
 });
 
@@ -128,7 +128,7 @@ const NewRelease=(props)=>{
         }
 
         fetchData();
-    }, [page]);
+    }, [page,total]);
 
     const changePageHandle = (event, page) => {
         setPage(page);

@@ -38,11 +38,12 @@ const columns = [
 const useStyles = makeStyles({
     root: {
         width: '100%',
-        minHeight: 1200,
+        marginBottom: '300px',
+        //minHeight: 1200,
     },
     container: {
-        minHeight: 700,
-        height: "100%",
+        //minHeight: 700,
+        height:'auto',
     },
 });
 const LikedPage = () => {
@@ -91,7 +92,8 @@ const LikedPage = () => {
             }
             await SetFavoriteSongList(newFavoriteSongs);
             await SetDatSie(newFavoriteSongs.length);
-            await SetLoading(false)
+            dispatch(playAction.updateSongList(newFavoriteSongs,'playlists'));
+            await SetLoading(false);
         } catch(e) {
             SetError(true);
             console.log({error: e})

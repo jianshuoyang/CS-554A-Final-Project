@@ -128,7 +128,7 @@ useEffect(() => {
         }
     }
     fetchData();
-},[props.id])
+},[id])
 
   let genres = genre && genre.map((genre, index)=>{
     return (
@@ -143,6 +143,7 @@ useEffect(() => {
                 </div>
                 )
         }
+        return null;
     });
     let imageAlbum = related_album && related_album.map((e, index)=>{
         if(index<=5){
@@ -152,6 +153,7 @@ useEffect(() => {
                 </div>
                 )
         }
+        return null;
     });
     let imageArtist = artists && artists.map((e, index)=>{
         if(index<=5){
@@ -161,6 +163,7 @@ useEffect(() => {
                 </div>
                 )
         }
+        return null;
     });
 
   return (

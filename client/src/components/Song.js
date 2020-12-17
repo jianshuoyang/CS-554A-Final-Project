@@ -129,7 +129,7 @@ const Song = (props)=>{
         }else{
             setPlay(false);
         }
-    },[songR,songsPlay.globalPlay])
+    },[songR,songsPlay.globalPlay,song.track.id])
 
 
 

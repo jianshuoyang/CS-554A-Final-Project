@@ -48,7 +48,8 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
     },
     list_name:{
-        textAlign: 'center'
+        textAlign: 'center',
+        color:'#0072ee',
     }
 });
 
@@ -126,7 +127,7 @@ const PlayList=(props)=>{
         }
 
         fetchData();
-    }, [page]);
+    }, [page,props.match.params.categories,total]);
 
     const changePageHandle = (event, page) => {
         setPage(page);

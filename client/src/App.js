@@ -50,7 +50,7 @@ function App() {
   }
   return (
 
-    <IntlProvider locale={locale}> 
+    <IntlProvider locale={locale}>
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
 
           <Router>
@@ -112,7 +112,7 @@ function App() {
                     <Route component={My404Component}/>
 
                   </Switch>
-                  <Songplay/>
+                  {/* <Songplay/> */}
                 </div>
             )}
           </Router>
