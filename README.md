@@ -1,5 +1,5 @@
 ## Web Programming II CS554A 2020F
-This is a React Web Application based on MERN techs stack!
+This is a Spotify-like Web Application based on MERN techs stack!
 
 ## Usage
 
