@@ -1,6 +1,5 @@
 const axios = require('axios').default;
 
-
 export default async function removeSong(songId) {
     let songInfo = {
         userEmail: window.sessionStorage.userEmail,

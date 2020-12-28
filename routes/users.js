@@ -4,7 +4,7 @@ const data = require('../data');
 const bcrypt = require('bcryptjs');
 const xss = require('xss');
 const multer = require('multer');
-const gm = require('gm').subClass({imageMagick:true});
+const gm = require('gm').subClass({imageMagick: true});
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage: storage,
-  limit:{fileSize: 100000}
+  limit: {fileSize: 100000}
 }).single("myImg");
 
 
@@ -138,28 +138,28 @@ router.post('/removeSong', async (req, res) => {
   }
 });
 
-router.post('/addImg', upload, async(req, res) => {
+router.post('/addImg', upload, async (req, res) => {
   gm(req.file.path)
-      .blur(8,1)
-      .write('client/src/img/profileImage.jpeg', function(err) {
-    if(err) {
-      console.log(err)
-    }
-  })
+      .blur(8, 1)
+      .write('client/src/img/profileImage.jpeg', function (err) {
+        if (err) {
+          console.log(err)
+        }
+      })
 });
 
 
-router.post('/getUser', async(req, res) => {
+router.post('/getUser', async (req, res) => {
   try {
     const user = await getUserByEmail(req.body.userEmail);
     res.status(200).json(user)
-  } catch(e) {
-    console.log({error:e})
+  } catch (e) {
+    console.log({error: e})
   }
 });
 
 
-router.post('/updateUser', async(req, res) => {
+router.post('/updateUser', async (req, res) => {
   console.log(req.body);
   let updateObj = {
     firstName: req.body.firstName,
@@ -170,10 +170,10 @@ router.post('/updateUser', async(req, res) => {
   try {
     const user = await getUserByEmail(req.body.userEmail);
     const userId = user._id.toString();
-    await data.users.updateUserDelta(userId,updateObj);
+    await data.users.updateUserDelta(userId, updateObj);
     res.status(200)
-  } catch(e) {
-    console.log({error:e})
+  } catch (e) {
+    console.log({error: e})
   }
 });
 

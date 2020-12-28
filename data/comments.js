@@ -2,7 +2,6 @@ const mongoCollections = require('../config/mongoCollections');
 const comments = mongoCollections.comments;
 const {ObjectId} = require('mongodb');
 
-// addComment('jianshuoyang2', 'good job2!');
 async function addComment(name, comment) {
 
   if (typeof name !== 'string' || !name) throw 'You must provide a name or its invalid type';
